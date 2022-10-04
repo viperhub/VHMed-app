@@ -33,8 +33,9 @@ public class SharedPrefManager {
             return (T) Integer.valueOf(mSharedPreferences.getInt(key, 0));
         } else if (anonymousClass == Long.class) {
             return (T) Long.valueOf(mSharedPreferences.getLong(key, 0));
+        } else {
+            return (T) App.self().getGSon().fromJson(mSharedPreferences.getString(key, ""), anonymousClass);
         }
-        return null;
     }
 
     public <T> void put(String key, T data) {
@@ -49,6 +50,8 @@ public class SharedPrefManager {
             editor.putInt(key, (Integer) data);
         } else if (data instanceof Long) {
             editor.putLong(key, (Long) data);
+        } else {
+            editor.putString(key, App.self().getGSon().toJson(data));
         }
         editor.apply();
     }
