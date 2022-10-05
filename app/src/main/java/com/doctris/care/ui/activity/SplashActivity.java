@@ -23,12 +23,16 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        onCheckConnection();
         bindingView();
+        bindingAction();
+        onCheckConnection();
     }
 
     private void bindingView() {
         btnRetry = findViewById(R.id.btnRetry);
+    }
+
+    private void bindingAction(){
         btnRetry.setOnClickListener(v -> onCheckConnection());
     }
 
@@ -49,7 +53,7 @@ public class SplashActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     } else {
-                        ToastUtil.error(this, status);
+                        ToastUtil.error(this, "Something went wrong");
                         showRetryButton();
                     }
                 });
