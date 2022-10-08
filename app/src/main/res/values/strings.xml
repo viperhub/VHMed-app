@@ -8,4 +8,7 @@
     <string name="forgot_password">Forgot Password?</string>
     <string name="login">Đăng nhập</string>
     <string name="not_have_account">Don\'t have an account?</string>
+    <string name="email_confirm">Enter email here</string>
+    <string name="send">Send</string>
+    <string name="forgot_password_content">Email you want change password to here</string>
 </resources>
