@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.Doctris" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">#38B9FF</item>
+        <item name="colorPrimaryVariant">#38B9FF</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -11,6 +11,12 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:windowTranslucentStatus">true</item>
-        <!-- Customize your theme here. -->
+    </style>
+    <!-- Customize your theme here. -->
+    <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/white</item>
+
+        <!-- Support library compatibility -->
+        <item name="background">@color/white</item>
     </style>
 </resources>
