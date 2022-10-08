@@ -10,6 +10,7 @@
         android:title="Search" />
     <item
         android:id="@+id/collections"
+        android:enabled="false"
         android:title="" />
     <item
         android:id="@+id/upcoming"
