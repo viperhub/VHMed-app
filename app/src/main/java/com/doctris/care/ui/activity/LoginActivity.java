@@ -1,6 +1,7 @@
 package com.doctris.care.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -55,7 +56,8 @@ public class LoginActivity extends AppCompatActivity {
         try {
             AccountRepository.getInstance().login(account).observe(this, status -> {
                 if (status.equals("success")) {
-                    tvMessage.setText("Login success");
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(intent);
                 } else if (status.equals("not verified")) {
                     tvMessage.setText("Please verify your email");
                 } else {
