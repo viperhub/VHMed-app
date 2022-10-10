@@ -40,6 +40,25 @@
         <activity
             android:name=".ui.activity.LoginActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".ui.activity.RequestForgotActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.activity.ForgotPasswordActivity"
+            android:exported="true">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="doctris-cloud.koreacentral.cloudapp.azure.com"
+                    android:scheme="http" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
