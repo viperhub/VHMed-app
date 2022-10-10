@@ -3,7 +3,7 @@ package com.doctris.care.domain;
 import com.doctris.care.entities.Account;
 import com.google.gson.annotations.SerializedName;
 
-public class LoginResponse {
+public class AccountResponse {
     @SerializedName("token")
     private String token;
     @SerializedName("user")

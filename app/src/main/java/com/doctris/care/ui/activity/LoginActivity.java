@@ -44,6 +44,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private void bindingAction() {
         btnLogin.setOnClickListener(this::onClickLogin);
+        tvForgotPassword.setOnClickListener(this::onClickForgotPassword);
+    }
+
+    private void onClickForgotPassword(View view) {
+        Intent intent = new Intent(this, RequestForgotActivity.class);
+        startActivity(intent);
     }
 
     @SuppressLint("SetTextI18n")
