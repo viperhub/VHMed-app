@@ -55,7 +55,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="doctris-cloud.koreacentral.cloudapp.azure.com"
+                    android:host="doctriscare.ml"
+                    android:pathPrefix="/forgot-password"
                     android:scheme="http" />
             </intent-filter>
         </activity>

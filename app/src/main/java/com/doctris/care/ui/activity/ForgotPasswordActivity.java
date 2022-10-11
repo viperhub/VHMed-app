@@ -87,6 +87,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     }
 
     private String getTokenFromUri(Uri uri) {
-        return uri.toString().substring(uri.toString().lastIndexOf("/") + 1);
+        return uri.getQueryParameter("token");
     }
 }
