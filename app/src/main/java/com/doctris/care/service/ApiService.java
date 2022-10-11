@@ -17,8 +17,8 @@ public interface ApiService {
     Call<AccountResponse> login(@Body RequestBody params);
 
     // user register api
-    @POST("/users")
-    Call<Account> register(@Body RequestBody params);
+    @POST("users")
+    Call<AccountResponse> register(@Body RequestBody params);
 
     // refresh token api
     @POST("users/refresh")

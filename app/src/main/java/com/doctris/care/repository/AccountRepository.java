@@ -154,5 +154,35 @@ public class AccountRepository {
         return status;
     }
 
+    public LiveData<String> register(String email, String password, String passwordConfirm) {
+        status = new MutableLiveData<>();
+        Map<String, Object> jsonParams = new ArrayMap<>();
+        jsonParams.put("email", email);
+        jsonParams.put("password", password);
+        jsonParams.put("passwordConfirm", passwordConfirm);
+        Call<AccountResponse> call = RetrofitClient.getInstance().getApi().register(RequestBodyUtil.createRequestBody(jsonParams));
+        call.enqueue(new Callback<AccountResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<AccountResponse> call, @NonNull Response<AccountResponse> response) {
+                if (response.isSuccessful()) {
+                    status.setValue("success");
+                } else {
+                    if (response.code() == 400) {
+                        status.setValue("email already exists");
+                    } else {
+                        status.setValue("error");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<AccountResponse> call, @NonNull Throwable t) {
+                LoggerUtil.e(t.getMessage());
+                status.setValue(t.getMessage());
+            }
+        });
+        return status;
+    }
+
 
 }

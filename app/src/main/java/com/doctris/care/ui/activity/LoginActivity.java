@@ -45,6 +45,12 @@ public class LoginActivity extends AppCompatActivity {
     private void bindingAction() {
         btnLogin.setOnClickListener(this::onClickLogin);
         tvForgotPassword.setOnClickListener(this::onClickForgotPassword);
+        tvRegister.setOnClickListener(this::onClickRegister);
+    }
+
+    private void onClickRegister(View view) {
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
     }
 
     private void onClickForgotPassword(View view) {
