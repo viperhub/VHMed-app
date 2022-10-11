@@ -59,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
                         AlertDialogUtil.success(this, "Đăng ký thành công", "Hãy kiểm tra email và xác minh tài khoản", "OK", listener);
                         break;
                     case "email already exists":
-                        AlertDialogUtil.error(this, "Đăng ký thất bại", "Hãy thử lại sau", "OK", KAlertDialog::dismissWithAnimation);
+                        AlertDialogUtil.error(this, "Đăng ký thất bại", "Email đã tồn tại", "OK", KAlertDialog::dismissWithAnimation);
                         break;
                     default:
                         AlertDialogUtil.error(this, "Đăng ký thất bại", "Hãy thử lại sau", "OK", KAlertDialog::dismissWithAnimation);
