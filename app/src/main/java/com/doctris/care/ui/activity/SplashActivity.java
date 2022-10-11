@@ -14,11 +14,13 @@ import com.doctris.care.repository.AccountRepository;
 import com.doctris.care.repository.PatientRepository;
 import com.doctris.care.storage.SharedPrefManager;
 import com.doctris.care.utils.ToastUtil;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 public class SplashActivity extends AppCompatActivity {
 
     private Intent intent;
     private Button btnRetry;
+    private LinearProgressIndicator progressIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private void bindingView() {
         btnRetry = findViewById(R.id.btnRetry);
+        progressIndicator = findViewById(R.id.progressBar);
     }
 
     private void bindingAction() {
@@ -38,10 +41,12 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void showRetryButton() {
+        progressIndicator.setVisibility(View.GONE);
         btnRetry.setVisibility(View.VISIBLE);
     }
 
     private void onCheckConnection() {
+        progressIndicator.setVisibility(View.VISIBLE);
         if (ConnectivityReceiver.isConnected()) {
             if (ConnectivityReceiver.isConnected()) {
                 AccountRepository.getInstance().refreshToken().observe(this, status -> {
