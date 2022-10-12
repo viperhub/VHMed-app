@@ -49,7 +49,7 @@
                 <data
                     android:host="doctriscare.ml"
                     android:pathPrefix="/confirm-verification"
-                    android:scheme="http" />
+                    android:scheme="https" />
             </intent-filter>
         </activity>
 
@@ -69,7 +69,7 @@
                 <data
                     android:host="doctriscare.ml"
                     android:pathPrefix="/forgot-password"
-                    android:scheme="http" />
+                    android:scheme="https" />
             </intent-filter>
         </activity>
 
