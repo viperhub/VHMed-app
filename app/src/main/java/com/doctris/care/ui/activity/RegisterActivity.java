@@ -52,6 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
                 AlertDialogUtil.stop(this);
                 switch (status) {
                     case "success":
+                        AccountRepository.getInstance().requestVerification(email);
                         KAlertDialog.KAlertClickListener listener = sDialog -> {
                             sDialog.dismissWithAnimation();
                             finish();

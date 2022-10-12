@@ -174,5 +174,21 @@ public class AccountRepository {
         return status;
     }
 
+    public void requestVerification(String email) {
+        Map<String, Object> jsonParams = new ArrayMap<>();
+        jsonParams.put(EMAIL, email);
+        Call<Void> call = RetrofitClient.getInstance().getApi().requestVerification(RequestBodyUtil.createRequestBody(jsonParams));
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                // no need to handle response
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                LoggerUtil.e(t.getMessage());
+            }
+        });
+    }
 
 }

@@ -20,6 +20,10 @@ public interface ApiService {
     @POST("users")
     Call<AccountResponse> register(@Body RequestBody params);
 
+    // user request verification
+    @POST("users/request-verification")
+    Call<Void> requestVerification(@Body RequestBody params);
+
     // refresh token api
     @POST("users/refresh")
     Call<AccountResponse> refreshToken(@Header("Authorization") String token);
