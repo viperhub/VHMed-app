@@ -9,14 +9,15 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.developer.kalert.KAlertDialog;
 import com.doctris.care.R;
 import com.doctris.care.repository.AccountRepository;
+import com.doctris.care.utils.AlertDialogUtil;
+import com.doctris.care.utils.ValidateUtil;
 
 public class RequestForgotActivity extends AppCompatActivity {
-    private static final String TAG = "RequestForgotActivity";
     private EditText etEmail;
     private Button btnSend;
-    private TextView tvMessage;
     private TextView tvBackToLogin;
     private TextView tvBackToRegister;
 
@@ -31,7 +32,6 @@ public class RequestForgotActivity extends AppCompatActivity {
     private void bindingView() {
         etEmail = findViewById(R.id.et_email_confirm);
         btnSend = findViewById(R.id.btn_send);
-        tvMessage = findViewById(R.id.message);
         tvBackToLogin = findViewById(R.id.tv_back_to_login);
         tvBackToRegister = findViewById(R.id.tv_back_to_register);
     }
@@ -43,7 +43,9 @@ public class RequestForgotActivity extends AppCompatActivity {
     }
 
     private void onClickBackToRegister(View view) {
-        // todo back to register
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void onClickBackToLogin(View view) {
@@ -54,13 +56,18 @@ public class RequestForgotActivity extends AppCompatActivity {
 
     private void onClickSend(View view) {
         String email = etEmail.getText().toString();
-        AccountRepository.getInstance().requestPasswordReset(email).observe(this, status -> {
-            if (status.equals("success")) {
-                tvMessage.setText("If your email is registered, you will receive an email with instructions on how to reset your password.");
-            } else {
-                tvMessage.setText("Cannot send request to reset password");
-            }
-        });
+        if (ValidateUtil.isEmailValid(etEmail)) {
+            AlertDialogUtil.loading(this);
+            AccountRepository.getInstance().requestPasswordReset(email).observe(this, status -> {
+                AlertDialogUtil.stop(this);
+                if (status.equals("success")) {
+                    AlertDialogUtil.success(this, "Thành công", "Nếu email đã đăng ký. Chúng tôi sẽ gửi email xác minh", "OK", KAlertDialog::dismissWithAnimation);
+                } else {
+                    AlertDialogUtil.error(this, "Lỗi", "Không thể xử lý", "OK", KAlertDialog::dismissWithAnimation);
+                }
+            });
+        }
+
     }
 
 }

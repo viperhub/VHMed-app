@@ -11,4 +11,10 @@
     <string name="email_confirm">Enter email here</string>
     <string name="send">Send</string>
     <string name="forgot_password_content">Email you want change password to here</string>
+    <!-- Register -->
+    <string name="register_welcome">Hãy tham gia cùng chúng tôi</string>
+    <string name="register_content">Đăng ký ở dưới đây!</string>
+    <string name="cf_password">Confirm Password</string>
+    <string name="have_account">Already have an account? Log In</string>
+    <string name="register">Đăng ký</string>
 </resources>

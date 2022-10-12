@@ -10,9 +10,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.developer.kalert.KAlertDialog;
 import com.doctris.care.R;
 import com.doctris.care.repository.AccountRepository;
+import com.doctris.care.utils.AlertDialogUtil;
 import com.doctris.care.utils.ToastUtil;
+import com.doctris.care.utils.ValidateUtil;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 
@@ -20,7 +23,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     private EditText etConfirmPassword;
     private String token;
     private Button btnReset;
-    private TextView tvMessage;
     private TextView tvBackToLogin;
 
     @Override
@@ -39,7 +41,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.et_password);
         etConfirmPassword = findViewById(R.id.et_confirmPassword);
         btnReset = findViewById(R.id.btn_resetPassword);
-        tvMessage = findViewById(R.id.message);
         tvBackToLogin = findViewById(R.id.tv_backToLogin);
     }
 
@@ -58,17 +59,15 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         String password = etPassword.getText().toString();
         String confirmPassword = etConfirmPassword.getText().toString();
         try {
-            if (!isCorrectLength(password, confirmPassword)) {
-                tvMessage.setText("Password must be at least 8 characters");
-            } else if (!isEqual(password, confirmPassword)) {
-                tvMessage.setText("Password and confirm password must be the same");
-            } else {
+            if (ValidateUtil.isPasswordValid(etPassword) && ValidateUtil.isPassEqual(etPassword, etConfirmPassword)) {
+                AlertDialogUtil.loading(this);
                 AccountRepository.getInstance().forgot(token, password, confirmPassword).observe(this, status -> {
+                    AlertDialogUtil.stop(this);
                     if (status.equals("success")) {
                         Intent intent = new Intent(this, LoginActivity.class);
                         startActivity(intent);
                     } else {
-                        tvMessage.setText("Reset password failed. Link is expired or invalid");
+                        AlertDialogUtil.error(this, "Yêu cầu thất bại", "Liên kết xác minh đã hết hạn", "OK", KAlertDialog::dismissWithAnimation);
                     }
                 });
             }
@@ -78,15 +77,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isCorrectLength(String password, String confirmPassword) {
-        return password.length() >= 8 && confirmPassword.length() >= 8;
-    }
-
-    private boolean isEqual(String password, String confirmPassword) {
-        return password.equals(confirmPassword);
-    }
-
     private String getTokenFromUri(Uri uri) {
-        return uri.toString().substring(uri.toString().lastIndexOf("/") + 1);
+        return uri.getQueryParameter("token");
     }
 }

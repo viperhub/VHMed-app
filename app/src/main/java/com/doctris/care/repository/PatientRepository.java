@@ -1,5 +1,6 @@
 package com.doctris.care.repository;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -7,7 +8,6 @@ import com.doctris.care.client.RetrofitClient;
 import com.doctris.care.domain.PatientResponse;
 import com.doctris.care.entities.Patient;
 import com.doctris.care.storage.SharedPrefManager;
-import com.doctris.care.utils.LoggerUtil;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class PatientRepository {
         Call<PatientResponse> call = RetrofitClient.getInstance().getApi().getPatientInfo("User " + SharedPrefManager.getInstance().get("token", String.class));
         call.enqueue(new retrofit2.Callback<PatientResponse>() {
             @Override
-            public void onResponse(Call<PatientResponse> call, retrofit2.Response<PatientResponse> response) {
+            public void onResponse(@NonNull Call<PatientResponse> call, @NonNull retrofit2.Response<PatientResponse> response) {
                 if (response.isSuccessful()) {
                     PatientResponse patientResponse = response.body();
                     assert patientResponse != null;
@@ -46,7 +46,7 @@ public class PatientRepository {
             }
 
             @Override
-            public void onFailure(Call<PatientResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<PatientResponse> call, @NonNull Throwable t) {
                 status.setValue("error");
             }
         });
