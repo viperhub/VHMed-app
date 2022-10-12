@@ -39,7 +39,19 @@
 
         <activity
             android:name=".ui.activity.LoginActivity"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="doctriscare.ml"
+                    android:pathPrefix="/confirm-verification"
+                    android:scheme="http" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".ui.activity.RequestForgotActivity"

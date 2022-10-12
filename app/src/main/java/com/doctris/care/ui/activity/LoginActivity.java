@@ -1,6 +1,7 @@
 package com.doctris.care.ui.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         bindingView();
         bindingAction();
+        verification();
     }
 
     private void bindingView() {
@@ -72,6 +74,20 @@ public class LoginActivity extends AppCompatActivity {
                     AlertDialogUtil.warning(this, "Login failed", "Tài khoản chưa xác minh", "OK", KAlertDialog::dismissWithAnimation);
                 } else {
                     AlertDialogUtil.error(this, "Login failed", "Email hoặc mật khẩu không tồn tại", "OK", KAlertDialog::dismissWithAnimation);
+                }
+            });
+        }
+    }
+
+    private void verification() {
+        Uri uri = getIntent().getData();
+        if (uri != null) {
+            String token = uri.getQueryParameter("token");
+            AccountRepository.getInstance().confirmVerification(token).observe(this, status -> {
+                if (status.equals("success")) {
+                    AlertDialogUtil.success(this, "Xác minh thành công", "Tài khoản đã được xác minh", "OK", KAlertDialog::dismissWithAnimation);
+                } else {
+                    AlertDialogUtil.error(this, "Xác minh thất bại", "Không thể xác minh tài khoản này", "OK", KAlertDialog::dismissWithAnimation);
                 }
             });
         }
