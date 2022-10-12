@@ -57,7 +57,9 @@ public class RequestForgotActivity extends AppCompatActivity {
     private void onClickSend(View view) {
         String email = etEmail.getText().toString();
         if (ValidateUtil.isEmailValid(etEmail)) {
+            AlertDialogUtil.loading(this);
             AccountRepository.getInstance().requestPasswordReset(email).observe(this, status -> {
+                AlertDialogUtil.stop(this);
                 if (status.equals("success")) {
                     AlertDialogUtil.success(this, "Thành công", "Nếu email đã đăng ký. Chúng tôi sẽ gửi email xác minh", "OK", KAlertDialog::dismissWithAnimation);
                 } else {
