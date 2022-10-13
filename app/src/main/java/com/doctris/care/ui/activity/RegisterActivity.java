@@ -49,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (ValidateUtil.isEmailValid(etEmail) && ValidateUtil.isPasswordValid(etPassword) && ValidateUtil.isPassEqual(etPassword, etConfirmPassword)) {
             AlertDialogUtil.loading(this);
             AccountRepository.getInstance().register(email, password, confirmPassword).observe(this, status -> {
-                AlertDialogUtil.stop(this);
+                AlertDialogUtil.stop();
                 switch (status) {
                     case "success":
                         AccountRepository.getInstance().requestVerification(email);

@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.developer.kalert.KAlertDialog;
@@ -66,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         if (ValidateUtil.isEmailValid(etEmail) && ValidateUtil.isPasswordValid(etPassword)) {
             AlertDialogUtil.loading(this);
             AccountRepository.getInstance().login(account).observe(this, status -> {
-                AlertDialogUtil.stop(this);
+                AlertDialogUtil.stop();
                 if (status.equals("success")) {
                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(intent);

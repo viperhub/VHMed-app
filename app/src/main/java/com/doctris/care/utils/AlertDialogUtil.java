@@ -19,7 +19,7 @@ public class AlertDialogUtil {
         kAlertDialog.show();
     }
 
-    public static void stop(Context context) {
+    public static void stop() {
         if (kAlertDialog != null) {
             kAlertDialog.dismissWithAnimation();
         }
