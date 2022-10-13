@@ -1,6 +1,7 @@
 package com.doctris.care.utils;
 
 import android.content.Context;
+import android.graphics.Color;
 
 import com.developer.kalert.KAlertDialog;
 import com.doctris.care.R;
@@ -14,6 +15,7 @@ public class AlertDialogUtil {
     public static void loading(Context context) {
         kAlertDialog = new KAlertDialog(context, KAlertDialog.PROGRESS_TYPE, 0)
                 .setTitleTextSize(20);
+        kAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#0BA2FF"));
         kAlertDialog.show();
     }
 
