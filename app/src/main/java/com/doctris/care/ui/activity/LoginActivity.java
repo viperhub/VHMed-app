@@ -72,9 +72,26 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(intent);
                 } else if (status.equals("not verified")) {
-                    AlertDialogUtil.warning(this, "Login failed", "Tài khoản chưa xác minh", "OK", KAlertDialog::dismissWithAnimation);
+                    KAlertDialog.KAlertClickListener listener = (KAlertDialog kAlertDialog) -> {
+                        kAlertDialog.dismissWithAnimation();
+                        new KAlertDialog(this, KAlertDialog.WARNING_TYPE, 0)
+                                .setTitleText("Gửi lại mã xác nhận")
+                                .setContentText("Bạn có muốn gửi lại mã xác nhận không?")
+                                .setConfirmText("Gửi")
+                                .setCancelText("Hủy")
+                                .setContentTextSize(15)
+                                .setTitleTextSize(20)
+                                .setConfirmClickListener(kAlertDialog1 -> {
+                                    kAlertDialog1.dismissWithAnimation();
+                                    AccountRepository.getInstance().requestVerification(email);
+                                    AlertDialogUtil.success(this, "Thành công", "Gửi mã xác minh thành công.", "OK", KAlertDialog::dismissWithAnimation);
+                                })
+                                .setCancelClickListener(KAlertDialog::dismissWithAnimation)
+                                .show();
+                    };
+                    AlertDialogUtil.warning(this, "Đăng nhập thất bại", "Tài khoản chưa xác minh", "OK", listener);
                 } else {
-                    AlertDialogUtil.error(this, "Login failed", "Email hoặc mật khẩu không tồn tại", "OK", KAlertDialog::dismissWithAnimation);
+                    AlertDialogUtil.error(this, "Đăng nhập thất bại", "Email hoặc mật khẩu không tồn tại", "OK", KAlertDialog::dismissWithAnimation);
                 }
             });
         }
