@@ -18,8 +18,13 @@
     <!-- Customize your theme here. -->
     <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/white</item>
-
         <!-- Support library compatibility -->
         <item name="background">@color/white</item>
+    </style>
+
+    <style name="ImagePicker" parent="Theme.Doctris">
+        <item name="android:background">@color/white</item>
+        <item name="background">@color/white</item>
+        <item name="android:statusBarColor">@color/white</item>
     </style>
 </resources>

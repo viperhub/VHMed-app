@@ -15,8 +15,11 @@ import com.developer.kalert.KAlertDialog;
 import com.doctris.care.R;
 import com.doctris.care.entities.Account;
 import com.doctris.care.repository.AccountRepository;
+import com.doctris.care.repository.PatientRepository;
 import com.doctris.care.utils.AlertDialogUtil;
 import com.doctris.care.utils.ValidateUtil;
+
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText etEmail;
@@ -69,8 +72,15 @@ public class LoginActivity extends AppCompatActivity {
             AccountRepository.getInstance().login(account).observe(this, status -> {
                 AlertDialogUtil.stop();
                 if (status.equals("success")) {
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(intent);
+                    if (Objects.equals(PatientRepository.getInstance().getPatientInfo().getValue(), "success")) {
+                        Intent intent = new Intent(this, HomeActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Intent intent = new Intent(this, PatientRegisterActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 } else if (status.equals("not verified")) {
                     KAlertDialog.KAlertClickListener listener = (KAlertDialog kAlertDialog) -> {
                         kAlertDialog.dismissWithAnimation();

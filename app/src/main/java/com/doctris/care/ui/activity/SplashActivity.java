@@ -57,12 +57,12 @@ public class SplashActivity extends AppCompatActivity {
 
                     PatientRepository.getInstance().getPatientInfo().observe(this, patient -> {
                         if (patient.equals("success")) {
+                            SharedPrefManager.getInstance().put("patient", patient);
                             intent = new Intent(SplashActivity.this, HomeActivity.class);
                             startActivity(intent);
                             finish();
                         } else if (patient.equals("not found")) {
-                            // only for test purpose only. Will be removed in the future when have screen for patient registration
-                            intent = new Intent(SplashActivity.this, LoginActivity.class);
+                            intent = new Intent(SplashActivity.this, PatientRegisterActivity.class);
                             startActivity(intent);
                             finish();
                         } else {
