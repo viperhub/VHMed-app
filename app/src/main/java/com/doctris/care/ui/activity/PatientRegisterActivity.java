@@ -187,7 +187,7 @@ public class PatientRegisterActivity extends AppCompatActivity implements EasyPe
     private Uri resizeImage(Uri uri) {
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-            Bitmap resized = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
+            Bitmap resized = Bitmap.createScaledBitmap(bitmap, 500, 500, true);
             File file = new File(getCacheDir(), "avatar.jpg");
             FileOutputStream out = new FileOutputStream(file);
             resized.compress(Bitmap.CompressFormat.JPEG, 100, out);
