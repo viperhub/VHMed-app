@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".App"
@@ -39,7 +41,19 @@
 
         <activity
             android:name=".ui.activity.LoginActivity"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="doctriscare.ml"
+                    android:pathPrefix="/confirm-verification"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".ui.activity.RequestForgotActivity"
@@ -57,12 +71,16 @@
                 <data
                     android:host="doctriscare.ml"
                     android:pathPrefix="/forgot-password"
-                    android:scheme="http" />
+                    android:scheme="https" />
             </intent-filter>
         </activity>
 
         <activity
             android:name=".ui.activity.RegisterActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.activity.PatientRegisterActivity"
             android:exported="false" />
     </application>
 

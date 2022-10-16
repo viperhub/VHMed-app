@@ -10,13 +10,21 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <!-- Navigation bar color -->
+        <item name="android:navigationBarColor">@color/white</item>
     </style>
     <!-- Customize your theme here. -->
     <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/white</item>
-
         <!-- Support library compatibility -->
         <item name="background">@color/white</item>
+    </style>
+
+    <style name="ImagePicker" parent="Theme.Doctris">
+        <item name="android:background">@color/white</item>
+        <item name="background">@color/white</item>
+        <item name="android:statusBarColor">@color/white</item>
     </style>
 </resources>

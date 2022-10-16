@@ -59,7 +59,7 @@ public class RequestForgotActivity extends AppCompatActivity {
         if (ValidateUtil.isEmailValid(etEmail)) {
             AlertDialogUtil.loading(this);
             AccountRepository.getInstance().requestPasswordReset(email).observe(this, status -> {
-                AlertDialogUtil.stop(this);
+                AlertDialogUtil.stop();
                 if (status.equals("success")) {
                     AlertDialogUtil.success(this, "Thành công", "Nếu email đã đăng ký. Chúng tôi sẽ gửi email xác minh", "OK", KAlertDialog::dismissWithAnimation);
                 } else {

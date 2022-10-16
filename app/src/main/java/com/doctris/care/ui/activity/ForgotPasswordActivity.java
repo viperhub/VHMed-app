@@ -62,7 +62,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             if (ValidateUtil.isPasswordValid(etPassword) && ValidateUtil.isPassEqual(etPassword, etConfirmPassword)) {
                 AlertDialogUtil.loading(this);
                 AccountRepository.getInstance().forgot(token, password, confirmPassword).observe(this, status -> {
-                    AlertDialogUtil.stop(this);
+                    AlertDialogUtil.stop();
                     if (status.equals("success")) {
                         Intent intent = new Intent(this, LoginActivity.class);
                         startActivity(intent);
