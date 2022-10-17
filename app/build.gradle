@@ -10,7 +10,7 @@ android {
         minSdk 25
         targetSdk 33
         versionCode 1
-        versionName "0.0.1-pre-alpha"
+        versionName "0.0.2-pre-alpha"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -52,4 +52,6 @@ dependencies {
     implementation 'pub.devrel:easypermissions:3.0.0'
     // File Picker
     implementation 'com.droidninja:filepicker:2.2.5'
+    // image circle
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }
