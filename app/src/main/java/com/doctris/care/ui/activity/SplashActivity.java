@@ -57,7 +57,6 @@ public class SplashActivity extends AppCompatActivity {
 
                     PatientRepository.getInstance().getPatientInfo().observe(this, patient -> {
                         if (patient.equals("success")) {
-                            SharedPrefManager.getInstance().put("patient", patient);
                             intent = new Intent(SplashActivity.this, HomeActivity.class);
                             startActivity(intent);
                             finish();
