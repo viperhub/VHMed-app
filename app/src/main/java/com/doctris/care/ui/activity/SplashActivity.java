@@ -59,10 +59,12 @@ public class SplashActivity extends AppCompatActivity {
                         if (patient.equals("success")) {
                             intent = new Intent(SplashActivity.this, HomeActivity.class);
                             startActivity(intent);
+                            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                             finish();
                         } else if (patient.equals("not found")) {
                             intent = new Intent(SplashActivity.this, PatientRegisterActivity.class);
                             startActivity(intent);
+                            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                             finish();
                         } else {
                             ToastUtil.error(this, "Không thể xác minh");
@@ -72,6 +74,7 @@ public class SplashActivity extends AppCompatActivity {
                 } else {
                     intent = new Intent(SplashActivity.this, LoginActivity.class);
                     startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                     finish();
                 }
             });
