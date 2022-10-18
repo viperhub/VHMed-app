@@ -1,6 +1,8 @@
 package com.doctris.care.service;
 
+import com.doctris.care.domain.CategoryResponse;
 import com.doctris.care.domain.PatientResponse;
+import com.doctris.care.domain.ServiceResponse;
 import com.doctris.care.entities.Account;
 import com.doctris.care.domain.AccountResponse;
 import com.doctris.care.entities.Patient;
@@ -14,6 +16,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
 
 public interface ApiService {
 
@@ -60,4 +63,16 @@ public interface ApiService {
                                   @Part("phone") RequestBody phone,
                                   @Part("address") RequestBody address,
                                   @Part MultipartBody.Part avatar);
+
+    // service list
+    @GET("collections/service/records")
+    Call<ServiceResponse> getServiceList(@Query("page") int page,
+                                         @Query("perPage") int perPage,
+                                         @Query("sort") String sort,
+                                         @Query("filter") String filter,
+                                         @Query("expand") String expand);
+
+    // category list
+    @GET("collections/category/records")
+    Call<CategoryResponse> getCategoryList();
 }
