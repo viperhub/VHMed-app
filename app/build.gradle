@@ -54,4 +54,7 @@ dependencies {
     implementation 'com.droidninja:filepicker:2.2.5'
     // image circle
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    // paging
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.android.volley:volley:1.2.1'
 }
