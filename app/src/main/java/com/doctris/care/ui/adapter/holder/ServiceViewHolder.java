@@ -1,6 +1,7 @@
 package com.doctris.care.ui.adapter.holder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.doctris.care.R;
 import com.doctris.care.entities.Service;
+import com.doctris.care.ui.activity.ServiceDetailsActivity;
 import com.doctris.care.utils.GlideUtil;
 
 public class ServiceViewHolder extends RecyclerView.ViewHolder {
@@ -46,6 +48,10 @@ public class ServiceViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void onClickServiceItem(View view) {
-        // todo
+
+        Intent intent = new Intent(context, ServiceDetailsActivity.class);
+        intent.putExtra("id",tvServiceId.getText().toString());
+        context.startActivity(intent);
+
     }
 }
