@@ -6,6 +6,7 @@ import com.doctris.care.domain.ServiceResponse;
 import com.doctris.care.entities.Account;
 import com.doctris.care.domain.AccountResponse;
 import com.doctris.care.entities.Patient;
+import com.doctris.care.entities.Service;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -16,6 +17,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiService {
@@ -75,4 +77,9 @@ public interface ApiService {
     // category list
     @GET("collections/category/records")
     Call<CategoryResponse> getCategoryList();
+
+    // service by id
+    @GET("collections/service/records/{id}")
+    Call<Service> getServiceById(@Path("id") String id,
+                                 @Query("expand") String expand);
 }

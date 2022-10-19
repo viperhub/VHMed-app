@@ -12,6 +12,7 @@ import com.doctris.care.utils.LoggerUtil;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.Response;
 
 public class ServiceRepository {
     private static ServiceRepository instance;
@@ -50,6 +51,31 @@ public class ServiceRepository {
             }
         });
         return services;
+    }
+    public LiveData<Service> getServiceById(String id) {
+        MutableLiveData<Service> service = new MutableLiveData<>();
+        status = new MutableLiveData<>();
+        Call<Service> call = RetrofitClient.getInstance().getApi().getServiceById(id, "category");
+        call.enqueue(new retrofit2.Callback<Service>() {
+            @Override
+            public void onResponse(@NonNull Call<Service> call, @NonNull Response<Service> response) {
+                if (response.isSuccessful()) {
+                    Service serviceResponse = response.body();
+                    assert serviceResponse != null;
+                    service.setValue(serviceResponse);
+                    status.setValue(SUCCESS);
+                } else {
+                    status.setValue(ERROR);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Service> call, @NonNull Throwable t) {
+                LoggerUtil.e(t.getMessage());
+                status.setValue(ERROR);
+            }
+        });
+        return service;
     }
 
 

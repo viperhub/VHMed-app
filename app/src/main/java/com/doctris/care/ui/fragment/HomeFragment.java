@@ -1,6 +1,8 @@
 package com.doctris.care.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +21,7 @@ import com.doctris.care.entities.Patient;
 import com.doctris.care.entities.Service;
 import com.doctris.care.repository.ServiceRepository;
 import com.doctris.care.storage.SharedPrefManager;
+import com.doctris.care.ui.activity.ServiceActivity;
 import com.doctris.care.ui.adapter.CartHorizontalAdapter;
 import com.doctris.care.utils.GlideUtil;
 
@@ -34,6 +37,7 @@ public class HomeFragment extends Fragment {
     private TextView tvNameInfo;
     private TextView tvBirthDayInfo;
     private TextView tvGenderInfo;
+    private TextView tvSeeAllService;
     private RecyclerView rvService;
     private RecyclerView rvDoctor;
     private RecyclerView rvBlog;
@@ -48,6 +52,7 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         bindingView(view);
+        bindingActions();
         setContentByTime();
         initService();
         initData();
@@ -60,9 +65,19 @@ public class HomeFragment extends Fragment {
         tvNameInfo = view.findViewById(R.id.tv_full_name);
         tvBirthDayInfo = view.findViewById(R.id.tv_birthday);
         tvGenderInfo = view.findViewById(R.id.tv_gender);
+        tvSeeAllService = view.findViewById(R.id.tv_see_all_service);
         rvService = view.findViewById(R.id.rv_service);
         rvDoctor = view.findViewById(R.id.rv_doctor);
         rvBlog = view.findViewById(R.id.rv_blog);
+    }
+
+    private void bindingActions(){
+        tvSeeAllService.setOnClickListener(this::onClickSeeAllService);
+    }
+
+    private void onClickSeeAllService(View view) {
+        Intent intent = new Intent(getActivity(), ServiceActivity.class);
+        startActivity(intent);
     }
 
     @SuppressLint("SetTextI18n")
