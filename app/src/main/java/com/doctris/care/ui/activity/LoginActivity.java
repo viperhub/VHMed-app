@@ -72,15 +72,16 @@ public class LoginActivity extends AppCompatActivity {
             AccountRepository.getInstance().login(account).observe(this, status -> {
                 AlertDialogUtil.stop();
                 if (status.equals("success")) {
-                    if (Objects.equals(PatientRepository.getInstance().getPatientInfo().getValue(), "success")) {
-                        Intent intent = new Intent(this, HomeActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        Intent intent = new Intent(this, PatientRegisterActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
+                    PatientRepository.getInstance().getPatientInfo().observe(this, patient -> {
+                        if (patient.equals("success")) {
+                            Intent intent = new Intent(this, HomeActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Intent intent = new Intent(this, PatientRegisterActivity.class);
+                            startActivity(intent);
+                        }
+                    });
                 } else if (status.equals("not verified")) {
                     KAlertDialog.KAlertClickListener listener = (KAlertDialog kAlertDialog) -> {
                         kAlertDialog.dismissWithAnimation();
