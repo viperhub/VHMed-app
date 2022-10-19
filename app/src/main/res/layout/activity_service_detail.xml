@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp">
         <Button
             android:id="@+id/btn_back"
@@ -24,8 +24,8 @@
             android:background="@drawable/ic_back_real"/>
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="SERVICE"
+            android:layout_height="wrap_content"
+            android:text="Dịch vụ"
             android:layout_marginLeft="10dp"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
-            android:text="INFORMATION SERVICE"
+            android:text="Thông tin dịch vụ"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@drawable/border_input"
+            android:background="@drawable/bg_transparent_input"
             android:orientation="vertical">
 
             <TextView
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="15dp"
                 android:paddingTop="15dp"
-                android:text="Name"
+                android:text="Tên dịch vụ"
                 android:textColor="@color/blue2"
                 android:textSize="10sp"
                 android:textStyle="bold" />
@@ -82,7 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@drawable/border_input"
+            android:background="@drawable/bg_transparent_input"
             android:orientation="vertical">
 
             <TextView
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="15dp"
                 android:paddingTop="15dp"
-                android:text="Price"
+                android:text="Giá"
                 android:textColor="@color/blue2"
                 android:textSize="10sp"
                 android:textStyle="bold" />
@@ -109,7 +109,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@drawable/border_input"
+            android:background="@drawable/bg_transparent_input"
             android:orientation="vertical">
 
             <TextView
@@ -117,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="15dp"
                 android:paddingTop="15dp"
-                android:text="Category"
+                android:text="Chuyên Khoa"
                 android:textColor="@color/blue2"
                 android:textSize="10sp"
                 android:textStyle="bold" />
@@ -136,7 +136,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@drawable/border_input"
+            android:background="@drawable/bg_transparent_input"
             android:orientation="vertical">
 
             <TextView
@@ -144,7 +144,7 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="15dp"
                 android:paddingTop="15dp"
-                android:text="Description"
+                android:text="Thông tin chi tiết"
                 android:textColor="@color/blue2"
                 android:textSize="10sp"
                 android:textStyle="bold" />
@@ -163,14 +163,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginHorizontal="20dp"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/bg_transparent_button"
-            android:paddingLeft="30dp"
-            android:paddingTop="13dp"
-            android:paddingRight="30dp"
-            android:paddingBottom="13dp"
-            android:text="Booking"
+            android:text="Đặt lịch"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold"
