@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.doctris.care.R;
+import com.doctris.care.domain.ServiceResponse;
 import com.doctris.care.entities.Patient;
 import com.doctris.care.entities.Service;
 import com.doctris.care.repository.ServiceRepository;
@@ -95,10 +96,10 @@ public class HomeFragment extends Fragment {
 
     private void initService() {
         rvService.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        LiveData<List<Service>> serviceLiveData = ServiceRepository.getInstance().getServices(1, 10, null, null);
+        LiveData<ServiceResponse> serviceLiveData = ServiceRepository.getInstance().getServices(1, 10, null, null);
         serviceLiveData.observe(getViewLifecycleOwner(), services -> {
             if (services != null) {
-                CartHorizontalAdapter<Service> adapter = new CartHorizontalAdapter<>(services, getActivity());
+                CartHorizontalAdapter<Service> adapter = new CartHorizontalAdapter<>(services.getItems(), getActivity());
                 rvService.setAdapter(adapter);
             }
         });

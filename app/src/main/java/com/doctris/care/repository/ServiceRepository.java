@@ -27,8 +27,8 @@ public class ServiceRepository {
         return instance;
     }
 
-    public LiveData<List<Service>> getServices(int page, int perPage, String sort, String filter) {
-        MutableLiveData<List<Service>> services = new MutableLiveData<>();
+    public LiveData<ServiceResponse> getServices(int page, int perPage, String sort, String filter) {
+        MutableLiveData<ServiceResponse> services = new MutableLiveData<>();
         status = new MutableLiveData<>();
         Call<ServiceResponse> call = RetrofitClient.getInstance().getApi().getServiceList(page, perPage, sort, filter, "category");
         call.enqueue(new retrofit2.Callback<ServiceResponse>() {
@@ -37,7 +37,7 @@ public class ServiceRepository {
                 if (response.isSuccessful()) {
                     ServiceResponse serviceResponse = response.body();
                     assert serviceResponse != null;
-                    services.setValue(serviceResponse.getItems());
+                    services.setValue(serviceResponse);
                     status.setValue(SUCCESS);
                 } else {
                     status.setValue(ERROR);
