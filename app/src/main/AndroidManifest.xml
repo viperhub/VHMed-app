@@ -82,6 +82,10 @@
         <activity
             android:name=".ui.activity.PatientRegisterActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".ui.activity.ServiceActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
