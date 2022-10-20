@@ -68,7 +68,7 @@ public class CartHorizontalHolder<T> extends RecyclerView.ViewHolder {
     private void bindDataDoctor(Doctor data) {
         GlideUtil.load(ivImage, data.getImage());
         tvName.setText(data.getName());
-        tvCategory.setText(data.getCategory().getCategoryName());
+        tvCategory.setText(data.getExpand().getCategory().getCategoryName());
         tvId.setText(String.valueOf(data.getId()));
     }
 }
