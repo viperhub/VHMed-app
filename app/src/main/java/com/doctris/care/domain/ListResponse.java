@@ -1,11 +1,10 @@
 package com.doctris.care.domain;
 
-import com.doctris.care.entities.Patient;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class PatientResponse {
+public class ListResponse<T> {
     @SerializedName("page")
     private int page;
     @SerializedName("perPage")
@@ -15,7 +14,7 @@ public class PatientResponse {
     @SerializedName("totalPages")
     private int totalPages;
     @SerializedName("items")
-    List<Patient> patients;
+    List<T> items;
 
     public int getPage() {
         return page;
@@ -49,11 +48,11 @@ public class PatientResponse {
         this.totalPages = totalPages;
     }
 
-    public List<Patient> getPatients() {
-        return patients;
+    public List<T> getItems() {
+        return items;
     }
 
-    public void setPatients(List<Patient> patients) {
-        this.patients = patients;
+    public void setItems(List<T> items) {
+        this.items = items;
     }
 }

@@ -3,7 +3,7 @@ package com.doctris.care.domain;
 import com.doctris.care.entities.Category;
 import com.google.gson.annotations.SerializedName;
 
-public class ExpandServiceResponse {
+public class ExpandResponse {
     @SerializedName("category")
     private Category category;
 

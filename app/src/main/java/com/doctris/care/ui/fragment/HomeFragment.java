@@ -1,7 +1,6 @@
 package com.doctris.care.ui.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -17,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.doctris.care.R;
-import com.doctris.care.domain.ServiceResponse;
+import com.doctris.care.domain.ListResponse;
 import com.doctris.care.entities.Patient;
 import com.doctris.care.entities.Service;
 import com.doctris.care.repository.ServiceRepository;
@@ -27,7 +26,6 @@ import com.doctris.care.ui.adapter.CartHorizontalAdapter;
 import com.doctris.care.utils.GlideUtil;
 
 import java.util.Calendar;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -96,7 +94,7 @@ public class HomeFragment extends Fragment {
 
     private void initService() {
         rvService.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        LiveData<ServiceResponse> serviceLiveData = ServiceRepository.getInstance().getServices(1, 10, null, null);
+        LiveData<ListResponse<Service>> serviceLiveData = ServiceRepository.getInstance().getServices(1, 10, null, null);
         serviceLiveData.observe(getViewLifecycleOwner(), services -> {
             if (services != null) {
                 CartHorizontalAdapter<Service> adapter = new CartHorizontalAdapter<>(services.getItems(), getActivity());

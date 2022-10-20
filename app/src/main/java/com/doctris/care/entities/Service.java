@@ -1,6 +1,6 @@
 package com.doctris.care.entities;
 
-import com.doctris.care.domain.ExpandServiceResponse;
+import com.doctris.care.domain.ExpandResponse;
 import com.google.gson.annotations.SerializedName;
 
 public class Service {
@@ -13,7 +13,7 @@ public class Service {
     @SerializedName("price")
     private int price;
     @SerializedName("@expand")
-    private ExpandServiceResponse expand;
+    private ExpandResponse expand;
     @SerializedName("image")
     private String image;
 
@@ -49,11 +49,11 @@ public class Service {
         this.price = price;
     }
 
-    public ExpandServiceResponse getExpand() {
+    public ExpandResponse getExpand() {
         return expand;
     }
 
-    public void setExpand(ExpandServiceResponse expand) {
+    public void setExpand(ExpandResponse expand) {
         this.expand = expand;
     }
 

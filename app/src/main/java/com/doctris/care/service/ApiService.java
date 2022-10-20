@@ -1,10 +1,9 @@
 package com.doctris.care.service;
 
-import com.doctris.care.domain.CategoryResponse;
-import com.doctris.care.domain.PatientResponse;
-import com.doctris.care.domain.ServiceResponse;
+import com.doctris.care.domain.ListResponse;
 import com.doctris.care.entities.Account;
 import com.doctris.care.domain.AccountResponse;
+import com.doctris.care.entities.Category;
 import com.doctris.care.entities.Patient;
 import com.doctris.care.entities.Service;
 
@@ -52,7 +51,7 @@ public interface ApiService {
 
     // get patient info
     @GET("collections/patient/records")
-    Call<PatientResponse> getPatientInfo(@Header("Authorization") String token);
+    Call<ListResponse<Patient>> getPatientInfo(@Header("Authorization") String token);
 
     // save patient info
     @Multipart
@@ -68,7 +67,7 @@ public interface ApiService {
 
     // service list
     @GET("collections/service/records")
-    Call<ServiceResponse> getServiceList(@Query("page") int page,
+    Call<ListResponse<Service>> getServiceList(@Query("page") int page,
                                          @Query("perPage") int perPage,
                                          @Query("sort") String sort,
                                          @Query("filter") String filter,
@@ -76,7 +75,7 @@ public interface ApiService {
 
     // category list
     @GET("collections/category/records")
-    Call<CategoryResponse> getCategoryList();
+    Call<ListResponse<Category>> getCategoryList();
 
     // service by id
     @GET("collections/service/records/{id}")

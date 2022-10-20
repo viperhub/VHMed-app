@@ -5,13 +5,15 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.doctris.care.client.RetrofitClient;
-import com.doctris.care.domain.CategoryResponse;
+import com.doctris.care.domain.ListResponse;
 import com.doctris.care.entities.Category;
 import com.doctris.care.utils.LoggerUtil;
 
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CategoryRepository {
     private static CategoryRepository instance;
@@ -29,12 +31,12 @@ public class CategoryRepository {
     public LiveData<List<Category>> getCategories() {
         MutableLiveData<List<Category>> categories = new MutableLiveData<>();
         status = new MutableLiveData<>();
-        Call<CategoryResponse> call = RetrofitClient.getInstance().getApi().getCategoryList();
-        call.enqueue(new retrofit2.Callback<CategoryResponse>() {
+        Call<ListResponse<Category>> call = RetrofitClient.getInstance().getApi().getCategoryList();
+        call.enqueue(new Callback<ListResponse<Category>>() {
             @Override
-            public void onResponse(@NonNull Call<CategoryResponse> call, @NonNull retrofit2.Response<CategoryResponse> response) {
+            public void onResponse(@NonNull Call<ListResponse<Category>> call, @NonNull Response<ListResponse<Category>> response) {
                 if (response.isSuccessful()) {
-                    CategoryResponse categoryResponse = response.body();
+                    ListResponse<Category> categoryResponse = response.body();
                     assert categoryResponse != null;
                     categories.setValue(categoryResponse.getItems());
                     status.setValue(SUCCESS);
@@ -44,7 +46,7 @@ public class CategoryRepository {
             }
 
             @Override
-            public void onFailure(@NonNull Call<CategoryResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ListResponse<Category>> call, @NonNull Throwable t) {
                 LoggerUtil.e(t.getMessage());
                 status.setValue(ERROR);
             }

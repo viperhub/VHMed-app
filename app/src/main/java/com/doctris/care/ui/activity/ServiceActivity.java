@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.doctris.care.R;
-import com.doctris.care.domain.ServiceResponse;
+import com.doctris.care.domain.ListResponse;
 import com.doctris.care.entities.Category;
 import com.doctris.care.entities.Service;
 import com.doctris.care.repository.CategoryRepository;
@@ -67,7 +67,7 @@ public class ServiceActivity extends AppCompatActivity {
 
         List<Service> serviceList = new ArrayList<>();
 
-        LiveData<ServiceResponse> serviceLiveData = ServiceRepository.getInstance().getServices(page, LIMIT, null, null);
+        LiveData<ListResponse<Service>> serviceLiveData = ServiceRepository.getInstance().getServices(page, LIMIT, null, null);
         serviceLiveData.observe(this, services -> {
             if (services != null) {
                 totalPage = services.getTotalPages();
@@ -81,7 +81,7 @@ public class ServiceActivity extends AppCompatActivity {
             if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight() && page < totalPage) {
                 page++;
                 progressBar.setVisibility(View.VISIBLE);
-                LiveData<ServiceResponse> serviceLiveData1 = ServiceRepository.getInstance().getServices(page, LIMIT, null, null);
+                LiveData<ListResponse<Service>> serviceLiveData1 = ServiceRepository.getInstance().getServices(page, LIMIT, null, null);
                 serviceLiveData1.observe(this, services -> {
                     if (services != null) {
                         totalPage = services.getTotalPages();

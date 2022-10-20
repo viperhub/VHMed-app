@@ -5,13 +5,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.doctris.care.client.RetrofitClient;
-import com.doctris.care.domain.ServiceResponse;
+import com.doctris.care.domain.ListResponse;
 import com.doctris.care.entities.Service;
 import com.doctris.care.utils.LoggerUtil;
 
-import java.util.List;
-
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ServiceRepository {
@@ -27,15 +26,15 @@ public class ServiceRepository {
         return instance;
     }
 
-    public LiveData<ServiceResponse> getServices(int page, int perPage, String sort, String filter) {
-        MutableLiveData<ServiceResponse> services = new MutableLiveData<>();
+    public LiveData<ListResponse<Service>> getServices(int page, int perPage, String sort, String filter) {
+        MutableLiveData<ListResponse<Service>> services = new MutableLiveData<>();
         status = new MutableLiveData<>();
-        Call<ServiceResponse> call = RetrofitClient.getInstance().getApi().getServiceList(page, perPage, sort, filter, "category");
-        call.enqueue(new retrofit2.Callback<ServiceResponse>() {
+        Call<ListResponse<Service>> call = RetrofitClient.getInstance().getApi().getServiceList(page, perPage, sort, filter, "category");
+        call.enqueue(new Callback<ListResponse<Service>>() {
             @Override
-            public void onResponse(@NonNull Call<ServiceResponse> call, @NonNull retrofit2.Response<ServiceResponse> response) {
+            public void onResponse(@NonNull Call<ListResponse<Service>> call, @NonNull Response<ListResponse<Service>> response) {
                 if (response.isSuccessful()) {
-                    ServiceResponse serviceResponse = response.body();
+                    ListResponse<Service> serviceResponse = response.body();
                     assert serviceResponse != null;
                     services.setValue(serviceResponse);
                     status.setValue(SUCCESS);
@@ -45,7 +44,7 @@ public class ServiceRepository {
             }
 
             @Override
-            public void onFailure(@NonNull Call<ServiceResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ListResponse<Service>> call, @NonNull Throwable t) {
                 LoggerUtil.e(t.getMessage());
                 status.setValue(ERROR);
             }
