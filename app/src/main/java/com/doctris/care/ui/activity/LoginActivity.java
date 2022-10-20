@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.developer.kalert.KAlertDialog;
@@ -19,7 +18,6 @@ import com.doctris.care.repository.PatientRepository;
 import com.doctris.care.utils.AlertDialogUtil;
 import com.doctris.care.utils.ValidateUtil;
 
-import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText etEmail;
@@ -88,16 +86,14 @@ public class LoginActivity extends AppCompatActivity {
                         new KAlertDialog(this, KAlertDialog.WARNING_TYPE)
                                 .setTitleText("Gửi lại mã xác nhận")
                                 .setContentText("Bạn có muốn gửi lại mã xác nhận không?")
-                                .setConfirmText("Gửi")
-                                .setCancelText("Hủy")
                                 .setContentTextSize(15)
                                 .setTitleTextSize(20)
-                                .setConfirmClickListener(kAlertDialog1 -> {
+                                .setConfirmClickListener("Gửi", kAlertDialog1 -> {
                                     kAlertDialog1.dismissWithAnimation();
                                     AccountRepository.getInstance().requestVerification(email);
                                     AlertDialogUtil.success(this, "Thành công", "Gửi mã xác minh thành công.", "OK", KAlertDialog::dismissWithAnimation);
                                 })
-                                .setCancelClickListener(KAlertDialog::dismissWithAnimation)
+                                .setCancelClickListener("Hủy", KAlertDialog::dismissWithAnimation)
                                 .show();
                     };
                     AlertDialogUtil.warning(this, "Đăng nhập thất bại", "Tài khoản chưa xác minh", "OK", listener);

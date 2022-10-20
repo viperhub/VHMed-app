@@ -31,8 +31,7 @@ public class AlertDialogUtil {
         kAlertDialog = new KAlertDialog(context, KAlertDialog.SUCCESS_TYPE)
                 .setTitleText(title)
                 .setContentText(content)
-                .setConfirmText(btnContent)
-                .setConfirmClickListener(listener)
+                .setConfirmClickListener(btnContent, listener)
                 .setContentTextSize(15)
                 .setTitleTextSize(20)
                 .confirmButtonColor(R.drawable.button_background);
@@ -43,8 +42,7 @@ public class AlertDialogUtil {
         kAlertDialog = new KAlertDialog(context, KAlertDialog.ERROR_TYPE)
                 .setTitleText(title)
                 .setContentText(content)
-                .setConfirmText(btnContent)
-                .setConfirmClickListener(listener)
+                .setConfirmClickListener(btnContent, listener)
                 .setContentTextSize(15)
                 .setTitleTextSize(20)
                 .confirmButtonColor(R.drawable.button_background);
@@ -55,8 +53,7 @@ public class AlertDialogUtil {
         kAlertDialog = new KAlertDialog(context, KAlertDialog.WARNING_TYPE)
                 .setTitleText(title)
                 .setContentText(content)
-                .setConfirmText(btnContent)
-                .setConfirmClickListener(listener)
+                .setConfirmClickListener(btnContent, listener)
                 .setContentTextSize(15)
                 .setTitleTextSize(20)
                 .confirmButtonColor(R.drawable.button_background);
