@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.doctris.care.R;
 import com.doctris.care.entities.Doctor;
 import com.doctris.care.entities.Service;
+import com.doctris.care.ui.activity.DoctorDetailsActivity;
 import com.doctris.care.ui.activity.ServiceDetailsActivity;
 import com.doctris.care.utils.GlideUtil;
 
@@ -30,11 +31,15 @@ public class CartHorizontalHolder<T> extends RecyclerView.ViewHolder {
     }
 
     private void onClickServiceItem(View view) {
+        Intent intent;
         switch (item.getClass().getSimpleName()) {
             case "Doctor":
+                intent = new Intent(context, DoctorDetailsActivity.class);
+                intent.putExtra("id", tvId.getText().toString());
+                context.startActivity(intent);
                 break;
             case "Service":
-                Intent intent = new Intent(context, ServiceDetailsActivity.class);
+                intent = new Intent(context, ServiceDetailsActivity.class);
                 intent.putExtra("id", tvId.getText().toString());
                 context.startActivity(intent);
                 break;

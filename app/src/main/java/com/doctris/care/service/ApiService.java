@@ -90,4 +90,9 @@ public interface ApiService {
                                              @Query("sort") String sort,
                                              @Query("filter") String filter,
                                              @Query("expand") String expand);
+
+    // doctor by id
+    @GET("collections/doctor/records/{id}")
+    Call<Doctor> getDoctorById(@Path("id") String id,
+                               @Query("expand") String expand);
 }
