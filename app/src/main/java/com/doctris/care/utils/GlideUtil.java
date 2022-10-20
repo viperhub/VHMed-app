@@ -4,6 +4,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class GlideUtil {
     private GlideUtil() {
     }
@@ -33,4 +35,12 @@ public class GlideUtil {
                 .placeholder(placeholder)
                 .into(imageView);
     }
+
+    public static void load(CircleImageView imageView, String url) {
+        Glide.with(imageView.getContext())
+                .load(url)
+                .into(imageView);
+    }
+
+
 }

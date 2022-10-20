@@ -26,7 +26,7 @@ public class DoctorRepository {
         return instance;
     }
 
-    public LiveData<ListResponse<Doctor>> getDoctors(int page, int perPage, String sort, String filter){
+    public LiveData<ListResponse<Doctor>> getDoctors(int page, int perPage, String sort, String filter) {
         MutableLiveData<ListResponse<Doctor>> doctors = new MutableLiveData<>();
         status = new MutableLiveData<>();
         Call<ListResponse<Doctor>> call = RetrofitClient.getInstance().getApi().getDoctorList(page, perPage, sort, filter, "category");
@@ -50,5 +50,31 @@ public class DoctorRepository {
             }
         });
         return doctors;
+    }
+
+    public LiveData<Doctor> getDoctorById(String id) {
+        MutableLiveData<Doctor> doctor = new MutableLiveData<>();
+        status = new MutableLiveData<>();
+        Call<Doctor> call = RetrofitClient.getInstance().getApi().getDoctorById(id, "category");
+        call.enqueue(new Callback<Doctor>() {
+            @Override
+            public void onResponse(@NonNull Call<Doctor> call, @NonNull Response<Doctor> response) {
+                if (response.isSuccessful()) {
+                    Doctor doctorResponse = response.body();
+                    assert doctorResponse != null;
+                    doctor.setValue(doctorResponse);
+                    status.setValue(SUCCESS);
+                } else {
+                    status.setValue(ERROR);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Doctor> call, @NonNull Throwable t) {
+                LoggerUtil.e(t.getMessage());
+                status.setValue(ERROR);
+            }
+        });
+        return doctor;
     }
 }

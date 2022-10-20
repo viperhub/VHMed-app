@@ -89,6 +89,10 @@
         <activity
             android:name=".ui.activity.DoctorActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".ui.activity.DoctorDetailsActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
