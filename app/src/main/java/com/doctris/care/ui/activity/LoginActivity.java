@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (status.equals("not verified")) {
                     KAlertDialog.KAlertClickListener listener = (KAlertDialog kAlertDialog) -> {
                         kAlertDialog.dismissWithAnimation();
-                        new KAlertDialog(this, KAlertDialog.WARNING_TYPE, 0)
+                        new KAlertDialog(this, KAlertDialog.WARNING_TYPE)
                                 .setTitleText("Gửi lại mã xác nhận")
                                 .setContentText("Bạn có muốn gửi lại mã xác nhận không?")
                                 .setConfirmText("Gửi")
