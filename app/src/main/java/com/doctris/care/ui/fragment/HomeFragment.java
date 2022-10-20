@@ -17,10 +17,13 @@ import android.widget.TextView;
 
 import com.doctris.care.R;
 import com.doctris.care.domain.ListResponse;
+import com.doctris.care.entities.Doctor;
 import com.doctris.care.entities.Patient;
 import com.doctris.care.entities.Service;
+import com.doctris.care.repository.DoctorRepository;
 import com.doctris.care.repository.ServiceRepository;
 import com.doctris.care.storage.SharedPrefManager;
+import com.doctris.care.ui.activity.DoctorActivity;
 import com.doctris.care.ui.activity.ServiceActivity;
 import com.doctris.care.ui.adapter.CartHorizontalAdapter;
 import com.doctris.care.utils.GlideUtil;
@@ -37,6 +40,7 @@ public class HomeFragment extends Fragment {
     private TextView tvBirthDayInfo;
     private TextView tvGenderInfo;
     private TextView tvSeeAllService;
+    private TextView tvSeeAllDoctor;
     private RecyclerView rvService;
     private RecyclerView rvDoctor;
     private RecyclerView rvBlog;
@@ -54,6 +58,7 @@ public class HomeFragment extends Fragment {
         bindingActions();
         setContentByTime();
         initService();
+        initDoctor();
         initData();
     }
 
@@ -68,10 +73,17 @@ public class HomeFragment extends Fragment {
         rvService = view.findViewById(R.id.rv_service);
         rvDoctor = view.findViewById(R.id.rv_doctor);
         rvBlog = view.findViewById(R.id.rv_blog);
+        tvSeeAllDoctor = view.findViewById(R.id.tv_see_all_doctor);
     }
 
-    private void bindingActions(){
+    private void bindingActions() {
         tvSeeAllService.setOnClickListener(this::onClickSeeAllService);
+        tvSeeAllDoctor.setOnClickListener(this::onClickSeeAllDoctor);
+    }
+
+    private void onClickSeeAllDoctor(View view) {
+        Intent intent = new Intent(getContext(), DoctorActivity.class);
+        startActivity(intent);
     }
 
     private void onClickSeeAllService(View view) {
@@ -80,7 +92,7 @@ public class HomeFragment extends Fragment {
     }
 
     @SuppressLint("SetTextI18n")
-    private void initData(){
+    private void initData() {
         Patient patient = SharedPrefManager.getInstance().get("patient", Patient.class);
         if (patient != null) {
             tvName.setText("Xin chào " + getName(patient.getName()));
@@ -99,6 +111,17 @@ public class HomeFragment extends Fragment {
             if (services != null) {
                 CartHorizontalAdapter<Service> adapter = new CartHorizontalAdapter<>(services.getItems(), getActivity());
                 rvService.setAdapter(adapter);
+            }
+        });
+    }
+
+    private void initDoctor() {
+        rvDoctor.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        LiveData<ListResponse<Doctor>> doctorLiveData = DoctorRepository.getInstance().getDoctors(1, 10, null, null);
+        doctorLiveData.observe(getViewLifecycleOwner(), doctors -> {
+            if (doctors != null) {
+                CartHorizontalAdapter<Doctor> adapter = new CartHorizontalAdapter<>(doctors.getItems(), getActivity());
+                rvDoctor.setAdapter(adapter);
             }
         });
     }

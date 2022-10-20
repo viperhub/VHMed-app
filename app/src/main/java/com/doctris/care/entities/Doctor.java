@@ -1,10 +1,11 @@
 package com.doctris.care.entities;
 
+import com.doctris.care.domain.ExpandResponse;
 import com.google.gson.annotations.SerializedName;
 
 public class Doctor {
     @SerializedName("id")
-    private int id;
+    private String id;
     @SerializedName("name")
     private String name;
     @SerializedName("date_of_birth")
@@ -17,18 +18,18 @@ public class Doctor {
     private String address;
     @SerializedName("description")
     private String description;
-    @SerializedName("category")
-    private Category category;
+    @SerializedName("@expand")
+    private ExpandResponse expand;
     @SerializedName("image")
     private String image;
     @SerializedName("price")
     private int price;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -80,12 +81,12 @@ public class Doctor {
         this.description = description;
     }
 
-    public Category getCategory() {
-        return category;
+    public ExpandResponse getExpand() {
+        return expand;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setExpand(ExpandResponse expand) {
+        this.expand = expand;
     }
 
     public String getImage() {
@@ -114,7 +115,7 @@ public class Doctor {
                 ", gender=" + gender +
                 ", address='" + address + '\'' +
                 ", description='" + description + '\'' +
-                ", category=" + category +
+                ", category=" + expand.getCategory().toString() +
                 ", image='" + image + '\'' +
                 ", price=" + price +
                 '}';

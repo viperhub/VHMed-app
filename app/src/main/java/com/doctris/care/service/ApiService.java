@@ -4,6 +4,7 @@ import com.doctris.care.domain.ListResponse;
 import com.doctris.care.entities.Account;
 import com.doctris.care.domain.AccountResponse;
 import com.doctris.care.entities.Category;
+import com.doctris.care.entities.Doctor;
 import com.doctris.care.entities.Patient;
 import com.doctris.care.entities.Service;
 
@@ -81,4 +82,12 @@ public interface ApiService {
     @GET("collections/service/records/{id}")
     Call<Service> getServiceById(@Path("id") String id,
                                  @Query("expand") String expand);
+
+    // doctor list
+    @GET("collections/doctor/records")
+    Call<ListResponse<Doctor>> getDoctorList(@Query("page") int page,
+                                             @Query("perPage") int perPage,
+                                             @Query("sort") String sort,
+                                             @Query("filter") String filter,
+                                             @Query("expand") String expand);
 }
