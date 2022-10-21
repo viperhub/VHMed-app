@@ -14,6 +14,8 @@
         <item name="android:windowLightStatusBar">true</item>
         <!-- Navigation bar color -->
         <item name="android:navigationBarColor">@color/white</item>
+        <!-- Custom font-->
+        <item name="android:fontFamily">@font/custom_font</item>
     </style>
     <!-- Customize your theme here. -->
     <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
