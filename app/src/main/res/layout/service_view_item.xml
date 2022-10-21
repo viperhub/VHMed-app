@@ -12,7 +12,7 @@
     <LinearLayout
         android:id="@+id/layout_item"
         android:layout_width="match_parent"
-        android:layout_height="147dp"
+        android:layout_height="200dp"
         android:background="@color/white"
         android:orientation="horizontal"
         android:padding="20dp">
@@ -26,13 +26,14 @@
         <ImageView
             android:id="@+id/img_service"
             android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_height="190dp"
             android:layout_gravity="center"
             android:src="@mipmap/ic_launcher" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:orientation="vertical">
 
             <TextView
