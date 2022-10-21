@@ -93,7 +93,7 @@ public class DoctorActivity extends AppCompatActivity {
         recyclerViewDoctor.setLayoutManager(linearLayoutManager);
         getDoctorData(listDoctor);
         nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-            if (scrollY > (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()) * 0.7 && page < totalPage) {
+            if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight() && page < totalPage) {
                 page++;
                 getDoctorData(listDoctor);
             }
