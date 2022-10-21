@@ -62,10 +62,11 @@ public class DoctorActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 if (newText != null && !newText.isEmpty()) {
                     filter = "(category.category_name~'" + newText + "' || name~'" + newText + "')";
-                    getDoctorData();
+                    listDoctor.clear();
+                    getDoctorData(listDoctor);
                 } else {
                     filter = null;
-                    getDoctorData();
+                    getDoctorData(listDoctor);
                 }
                 return false;
             }
@@ -90,11 +91,11 @@ public class DoctorActivity extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerViewDoctor.setLayoutManager(linearLayoutManager);
-        getDoctorData();
+        getDoctorData(listDoctor);
         nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-            if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight() && page < totalPage) {
+            if (scrollY > (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()) * 0.7 && page < totalPage) {
                 page++;
-                getDoctorData();
+                getDoctorData(listDoctor);
             }
         });
     }
@@ -110,7 +111,8 @@ public class DoctorActivity extends AppCompatActivity {
                     filter = "(category='" + categoryId + "')";
                 }
                 page = 1;
-                getDoctorData();
+                listDoctor.clear();
+                getDoctorData(listDoctor);
             }
 
             @Override
@@ -120,14 +122,14 @@ public class DoctorActivity extends AppCompatActivity {
         }));
     }
 
-    private void getDoctorData() {
+    private void getDoctorData(List<Doctor> list) {
         progressBar.setVisibility(View.VISIBLE);
         LiveData<ListResponse<Doctor>> doctorLiveData = DoctorRepository.getInstance().getDoctors(page, LIMIT, null, filter);
         doctorLiveData.observe(this, doctors -> {
             if (doctors != null) {
                 totalPage = doctors.getTotalPages();
-                listDoctor = doctors.getItems();
-                DoctorAdapter doctorAdapter = new DoctorAdapter(listDoctor, this);
+                list.addAll(doctors.getItems());
+                DoctorAdapter doctorAdapter = new DoctorAdapter(list, this);
                 recyclerViewDoctor.setAdapter(doctorAdapter);
             }
             progressBar.setVisibility(View.GONE);
@@ -139,7 +141,7 @@ public class DoctorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor);
-
+        listDoctor = new ArrayList<>();
         bindingViews();
         initLinearLayout();
         bindingActions();
