@@ -145,14 +145,71 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:orientation="horizontal">
+            android:background="@drawable/bg_transparent_input"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:background="@drawable/bg_transparent_input"
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="15dp"
+                        android:paddingTop="15dp"
+                        android:text="Ngày sinh"
+                        android:textColor="@color/blue2"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_birthday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="15dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="15dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="15dp"
+                        android:paddingTop="15dp"
+                        android:text="Số điện thoại"
+                        android:textColor="@color/blue2"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="15dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="15dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -160,13 +217,40 @@
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="15dp"
                     android:paddingTop="15dp"
-                    android:text="Ngày sinh"
+                    android:text="Địa chỉ"
                     android:textColor="@color/blue2"
                     android:textSize="10sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tv_birthday"
+                    android:id="@+id/tv_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="15dp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="15dp"
+                    android:paddingTop="15dp"
+                    android:text="Thông tin chi tiết"
+                    android:textColor="@color/blue2"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="15dp"
@@ -176,10 +260,9 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:background="@drawable/bg_transparent_input"
+                android:layout_margin="5dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -187,102 +270,22 @@
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="15dp"
                     android:paddingTop="15dp"
-                    android:text="Số điện thoại"
+                    android:text="Giá đặt lịch"
                     android:textColor="@color/blue2"
                     android:textSize="10sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tv_phone"
+                    android:id="@+id/tv_price_doctor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="15dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="15dp" />
+
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/bg_transparent_input"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="15dp"
-                android:paddingTop="15dp"
-                android:text="Địa chỉ"
-                android:textColor="@color/blue2"
-                android:textSize="10sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="15dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="15dp" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/bg_transparent_input"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="15dp"
-                android:paddingTop="15dp"
-                android:text="Thông tin chi tiết"
-                android:textColor="@color/blue2"
-                android:textSize="10sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="15dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="15dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/bg_transparent_input"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="15dp"
-                android:paddingTop="15dp"
-                android:text="Giá đặt lịch"
-                android:textColor="@color/blue2"
-                android:textSize="10sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_price_doctor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="15dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="15dp" />
-
-        </LinearLayout>
 
         <Button
             android:id="@+id/btn_booking_doctor"
