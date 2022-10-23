@@ -2,6 +2,7 @@ package com.doctris.care.ui.adapter.holder;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.doctris.care.R;
 import com.doctris.care.entities.Booking;
+import com.doctris.care.ui.activity.BookingHistoryDetail;
 
 public class BookingViewHolder extends RecyclerView.ViewHolder {
     private TextView tvName;
@@ -23,6 +25,7 @@ public class BookingViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         this.context = context;
         bindingView(itemView);
+        bindingAction(itemView);
     }
 
     private void bindingView(View itemView) {
@@ -31,6 +34,17 @@ public class BookingViewHolder extends RecyclerView.ViewHolder {
         tvTime = itemView.findViewById(R.id.tv_booking_time);
         tvStatus = itemView.findViewById(R.id.tv_booking_status);
         tvId = itemView.findViewById(R.id.tv_booking_id);
+    }
+
+    private void bindingAction(View itemView) {
+        itemView.setOnClickListener(this::onItemClick);
+    }
+
+    private void onItemClick(View view) {
+        String id = tvId.getText().toString();
+        Intent intent = new Intent(context, BookingHistoryDetail.class);
+        intent.putExtra("id", id);
+        context.startActivity(intent);
     }
 
     @SuppressLint("SetTextI18n")

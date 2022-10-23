@@ -111,6 +111,10 @@
         <activity
             android:name=".ui.activity.BookingHistoryActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".ui.activity.BookingHistoryDetail"
+            android:exported="false" />
     </application>
 
 </manifest>
