@@ -66,6 +66,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     if (status.equals("success")) {
                         Intent intent = new Intent(this, LoginActivity.class);
                         startActivity(intent);
+                        finish();
                     } else {
                         AlertDialogUtil.error(this, "Yêu cầu thất bại", "Liên kết xác minh đã hết hạn", "OK", KAlertDialog::dismissWithAnimation);
                     }
