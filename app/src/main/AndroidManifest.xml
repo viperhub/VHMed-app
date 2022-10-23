@@ -35,9 +35,11 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name=".ui.activity.HomeActivity"
             android:exported="false" />
+
         <activity
             android:name=".ui.activity.LoginActivity"
             android:exported="true">
@@ -53,9 +55,11 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.activity.RequestForgotActivity"
             android:exported="false" />
+
         <activity
             android:name=".ui.activity.ForgotPasswordActivity"
             android:exported="true">
@@ -71,9 +75,11 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.activity.RegisterActivity"
             android:exported="false" />
+
         <activity
             android:name=".ui.activity.PatientRegisterActivity"
             android:exported="false" />
@@ -100,6 +106,10 @@
 
         <activity
             android:name=".ui.activity.DoctorDetailsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.activity.BookingHistoryActivity"
             android:exported="false" />
     </application>
 
