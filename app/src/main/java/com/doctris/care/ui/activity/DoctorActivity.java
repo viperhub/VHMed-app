@@ -1,6 +1,7 @@
 package com.doctris.care.ui.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -93,7 +94,7 @@ public class DoctorActivity extends AppCompatActivity {
         recyclerViewDoctor.setLayoutManager(linearLayoutManager);
         getDoctorData(listDoctor);
         nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-            if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight() && page < totalPage) {
+            if (scrollY > (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()) * 0.8 && page < totalPage) {
                 page++;
                 getDoctorData(listDoctor);
             }
