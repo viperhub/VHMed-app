@@ -83,6 +83,14 @@
             android:exported="false" />
 
         <activity
+            android:name=".ui.activity.BlogDetailActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.activity.BlogActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".ui.activity.ServiceActivity"
             android:exported="false" />
 
