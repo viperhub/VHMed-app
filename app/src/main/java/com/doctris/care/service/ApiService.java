@@ -4,6 +4,7 @@ import com.doctris.care.domain.ListResponse;
 import com.doctris.care.entities.Account;
 import com.doctris.care.domain.AccountResponse;
 import com.doctris.care.entities.Blog;
+import com.doctris.care.entities.Booking;
 import com.doctris.care.entities.Category;
 import com.doctris.care.entities.Doctor;
 import com.doctris.care.entities.Patient;
@@ -70,18 +71,18 @@ public interface ApiService {
     // service list
     @GET("collections/service/records")
     Call<ListResponse<Service>> getServiceList(@Query("page") int page,
-                                         @Query("perPage") int perPage,
-                                         @Query("sort") String sort,
-                                         @Query("filter") String filter,
-                                         @Query("expand") String expand);
+                                               @Query("perPage") int perPage,
+                                               @Query("sort") String sort,
+                                               @Query("filter") String filter,
+                                               @Query("expand") String expand);
 
     // blog list
     @GET("collections/blog/records")
     Call<ListResponse<Blog>> getBlogList(@Query("page") int page,
-                                            @Query("perPage") int perPage,
-                                            @Query("sort") String sort,
-                                            @Query("filter") String filter,
-                                            @Query("expand") String expand);
+                                         @Query("perPage") int perPage,
+                                         @Query("sort") String sort,
+                                         @Query("filter") String filter,
+                                         @Query("expand") String expand);
 
     // category list
     @GET("collections/category/records")
@@ -92,10 +93,10 @@ public interface ApiService {
     Call<Service> getServiceById(@Path("id") String id,
                                  @Query("expand") String expand);
 
-//    // blog by id
+    // blog by id
     @GET("collections/blog/records/{id}")
     Call<Blog> getBlogById(@Path("id") String id,
-                                 @Query("expand") String expand);
+                           @Query("expand") String expand);
 
     // doctor list
     @GET("collections/doctor/records")
@@ -109,4 +110,19 @@ public interface ApiService {
     @GET("collections/doctor/records/{id}")
     Call<Doctor> getDoctorById(@Path("id") String id,
                                @Query("expand") String expand);
+
+    // booking history
+    @GET("collections/booking/records")
+    Call<ListResponse<Booking>> getBookingHistory(@Header("Authorization") String token,
+                                                  @Query("page") int page,
+                                                  @Query("perPage") int perPage,
+                                                  @Query("sort") String sort,
+                                                  @Query("filter") String filter,
+                                                  @Query("expand") String expand);
+
+    // booking history detail
+    @GET("collections/booking/records/{id}")
+    Call<Booking> getBookingHistoryDetail(@Header("Authorization") String token,
+                                          @Path("id") String id,
+                                          @Query("expand") String expand);
 }

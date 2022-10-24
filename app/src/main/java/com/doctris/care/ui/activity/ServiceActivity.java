@@ -95,12 +95,9 @@ public class ServiceActivity extends AppCompatActivity {
         getServiceData(listService);
 
         nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-            progressBar.setVisibility(View.VISIBLE);
-            if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight() && page < totalPage) {
+            if (scrollY > (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()) * 0.8 && page < totalPage) {
                 page++;
                 getServiceData(listService);
-            } else {
-                progressBar.setVisibility(View.GONE);
             }
         });
     }
