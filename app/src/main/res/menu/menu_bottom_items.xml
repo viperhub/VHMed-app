@@ -3,11 +3,11 @@
     <item
         android:id="@+id/home"
         android:icon="@drawable/ic_baseline_home_24"
-        android:title="Home" />
+        android:title="Trang chủ" />
     <item
         android:id="@+id/search"
         android:icon="@drawable/ic_baseline_search_24"
-        android:title="Search" />
+        android:title="Tìm kiếm" />
     <item
         android:id="@+id/collections"
         android:enabled="false"
@@ -15,9 +15,9 @@
     <item
         android:id="@+id/upcoming"
         android:icon="@drawable/ic_baseline_upcoming_24"
-        android:title="UpComing" />
+        android:title="Lịch hẹn" />
     <item
         android:id="@+id/account"
         android:icon="@drawable/ic_baseline_person_24"
-        android:title="Account" />
+        android:title="Tài khoản" />
 </menu>
