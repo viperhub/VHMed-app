@@ -3,17 +3,17 @@ package com.doctris.care.ui.fragment;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.doctris.care.R;
 import com.doctris.care.domain.ListResponse;
@@ -24,6 +24,7 @@ import com.doctris.care.repository.DoctorRepository;
 import com.doctris.care.repository.ServiceRepository;
 import com.doctris.care.storage.SharedPrefManager;
 import com.doctris.care.ui.activity.DoctorActivity;
+import com.doctris.care.ui.activity.PatientInfoActivity;
 import com.doctris.care.ui.activity.ServiceActivity;
 import com.doctris.care.ui.adapter.CartHorizontalAdapter;
 import com.doctris.care.utils.GlideUtil;
@@ -44,6 +45,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView rvService;
     private RecyclerView rvDoctor;
     private RecyclerView rvBlog;
+    private CardView cvInfo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,11 +76,18 @@ public class HomeFragment extends Fragment {
         rvDoctor = view.findViewById(R.id.rv_doctor);
         rvBlog = view.findViewById(R.id.rv_blog);
         tvSeeAllDoctor = view.findViewById(R.id.tv_see_all_doctor);
+        cvInfo = view.findViewById(R.id.patientInfo);
     }
 
     private void bindingActions() {
         tvSeeAllService.setOnClickListener(this::onClickSeeAllService);
         tvSeeAllDoctor.setOnClickListener(this::onClickSeeAllDoctor);
+        cvInfo.setOnClickListener(this::onClickInfo);
+    }
+
+    private void onClickInfo(View view) {
+        Intent intent = new Intent(getContext(), PatientInfoActivity.class);
+        startActivity(intent);
     }
 
     private void onClickSeeAllDoctor(View view) {
