@@ -2,14 +2,13 @@ package com.doctris.care.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.developer.kalert.KAlertDialog;
 import com.doctris.care.R;
@@ -19,6 +18,7 @@ import com.doctris.care.repository.AccountRepository;
 import com.doctris.care.storage.SharedPrefManager;
 import com.doctris.care.ui.activity.BookingHistoryActivity;
 import com.doctris.care.ui.activity.LoginActivity;
+import com.doctris.care.ui.activity.PatientInfoActivity;
 import com.doctris.care.utils.AlertDialogUtil;
 import com.doctris.care.utils.GlideUtil;
 
@@ -31,6 +31,7 @@ public class AccountFragment extends Fragment {
     private TextView tvLogout;
     private TextView tvBookingHistory;
     private TextView tvChangePassword;
+    private TextView tvChangeProfile;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,12 +54,19 @@ public class AccountFragment extends Fragment {
         tvLogout = view.findViewById(R.id.logout);
         tvBookingHistory = view.findViewById(R.id.tv_history);
         tvChangePassword = view.findViewById(R.id.tv_change_password);
+        tvChangeProfile = view.findViewById(R.id.tv_my_account);
     }
 
     private void bindingActions() {
         tvLogout.setOnClickListener(this::onClickLogout);
         tvBookingHistory.setOnClickListener(this::onClickBookingHistory);
         tvChangePassword.setOnClickListener(this::onClickChangePassword);
+        tvChangeProfile.setOnClickListener(this::onClickChangeProfile);
+    }
+
+    private void onClickChangeProfile(View view) {
+        Intent intent = new Intent(getContext(), PatientInfoActivity.class);
+        startActivity(intent);
     }
 
     private void onClickChangePassword(View view) {
