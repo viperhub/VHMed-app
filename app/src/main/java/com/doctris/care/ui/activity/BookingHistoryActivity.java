@@ -43,7 +43,7 @@ public class BookingHistoryActivity extends AppCompatActivity {
 
     private void getBookingHistory(List<Booking> listBooking) {
         progressBar.setVisibility(View.VISIBLE);
-        LiveData<ListResponse<Booking>> bookingLiveData = BookingRepository.getInstance().getBookingHistory(page, LIMIT, null, null);
+        LiveData<ListResponse<Booking>> bookingLiveData = BookingRepository.getInstance().getBookingHistory(page, LIMIT, "-date_time", null);
         bookingLiveData.observe(this, bookings -> {
             if (bookings != null) {
                 listBooking.addAll(bookings.getItems());
