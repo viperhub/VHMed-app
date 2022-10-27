@@ -17,4 +17,5 @@
     <string name="cf_password">Confirm Password</string>
     <string name="have_account">Already have an account? Log In</string>
     <string name="register">Đăng ký</string>
+    <string name="msg_token_fmt">FCM Token: %s</string>
 </resources>

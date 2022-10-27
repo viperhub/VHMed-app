@@ -1,10 +1,12 @@
 package com.doctris.care.ui.activity;
 
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
-
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,9 +17,9 @@ import com.doctris.care.ui.fragment.HomeFragment;
 import com.doctris.care.ui.fragment.NewFragment;
 import com.doctris.care.ui.fragment.SearchFragment;
 import com.doctris.care.ui.fragment.UpComingFragment;
-import com.doctris.care.utils.ToastUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -61,6 +63,7 @@ public class HomeActivity extends AppCompatActivity {
         });
         openFabNewIcon();
         notificationRequest();
+        firebaseToken();
     }
 
     private void notificationRequest() {
@@ -69,6 +72,18 @@ public class HomeActivity extends AppCompatActivity {
                 EasyPermissions.requestPermissions(this, "Chúng tôi cần quyền thông báo để gửi đến bạn những tin tức mới", 1, android.Manifest.permission.POST_NOTIFICATIONS);
             }
         }
+    }
+
+    private void firebaseToken() {
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                return;
+            }
+            String token = task.getResult();
+            String msg = getString(R.string.msg_token_fmt, token);
+            Log.d(TAG, msg);
+        });
     }
 
     private void bindingView() {
