@@ -1,6 +1,7 @@
 package com.doctris.care.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 
@@ -14,8 +15,11 @@ import com.doctris.care.ui.fragment.HomeFragment;
 import com.doctris.care.ui.fragment.NewFragment;
 import com.doctris.care.ui.fragment.SearchFragment;
 import com.doctris.care.ui.fragment.UpComingFragment;
+import com.doctris.care.utils.ToastUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -56,6 +60,15 @@ public class HomeActivity extends AppCompatActivity {
             return true;
         });
         openFabNewIcon();
+        notificationRequest();
+    }
+
+    private void notificationRequest() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (!EasyPermissions.hasPermissions(this, android.Manifest.permission.POST_NOTIFICATIONS)) {
+                EasyPermissions.requestPermissions(this, "Chúng tôi cần quyền thông báo để gửi đến bạn những tin tức mới", 1, android.Manifest.permission.POST_NOTIFICATIONS);
+            }
+        }
     }
 
     private void bindingView() {
