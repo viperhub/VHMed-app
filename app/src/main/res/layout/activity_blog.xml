@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient_background"
+    android:background="@color/white"
     android:fillViewport="true"
     android:orientation="vertical">
 
@@ -36,27 +36,43 @@
         android:layout_marginVertical="10dp"
         android:background="@drawable/search_border"
         app:iconifiedByDefault="false"
-        app:queryHint="Tìm kiếm dịch vụ"
-        app:queryBackground="@null"
-        />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_blog_horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="10dp"/>
-
+        app:queryHint="Tìm kiếm Blog"
+        app:queryBackground="@null"/>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/idNestedSV"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="20dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#2196F3"
+                android:text="Bảng tin Nổi Bật"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_blog_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="20dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#2196F3"
+                android:text="Bảng tin Mới"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview_blog"

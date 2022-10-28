@@ -7,8 +7,11 @@ import androidx.lifecycle.MutableLiveData;
 import com.doctris.care.client.RetrofitClient;
 import com.doctris.care.domain.ListResponse;
 import com.doctris.care.entities.Blog;
+import com.doctris.care.storage.SharedPrefManager;
 import com.doctris.care.utils.LoggerUtil;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -76,5 +79,24 @@ public class BlogRepository {
             }
         });
         return blog;
+    }
+
+    public void updateViewerBlog(String id, int viewer){
+        MutableLiveData<Blog> blogMutableLiveData = new MutableLiveData<>();
+        status = new MutableLiveData<>();
+
+        RequestBody viewerRequestBody = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(viewer));
+
+        Call<Void> call = RetrofitClient.getInstance().getApi().updateViewerBlog("User " + SharedPrefManager.getInstance().get("token", String.class) ,id, viewerRequestBody);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
     }
 }

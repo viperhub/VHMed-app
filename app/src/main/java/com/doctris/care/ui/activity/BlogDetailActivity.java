@@ -63,9 +63,11 @@ public class BlogDetailActivity extends AppCompatActivity {
                 tvdateCreate.setText(blog.getDateCreated());
                 tvTittle.setText(blog.getTittle());
                 tvDescription.setText(blog.getDescription());
+                BlogRepository.getInstance().updateViewerBlog(blog.getId(), blog.getViewer() + 1);
             }
         });
     }
+
 
     public void bindingView() {
         imvBlog = findViewById(R.id.iv_image_blog);
@@ -81,7 +83,7 @@ public class BlogDetailActivity extends AppCompatActivity {
 
     private void getBlogData(List<Blog> blogList) {
         progressBar.setVisibility(View.VISIBLE);
-        LiveData<ListResponse<Blog>> blogLiveData = BlogRepository.getInstance().getBlog(page, LIMIT, "-created", fillter);
+        LiveData<ListResponse<Blog>> blogLiveData = BlogRepository.getInstance().getBlog(page, 5, "-created", fillter);
         blogLiveData.observe(this, blogs -> {
             if (blogs != null) {
                 totalPage = blogs.getTotalPages();
