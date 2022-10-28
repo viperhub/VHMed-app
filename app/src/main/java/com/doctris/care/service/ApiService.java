@@ -1,8 +1,8 @@
 package com.doctris.care.service;
 
+import com.doctris.care.domain.AccountResponse;
 import com.doctris.care.domain.ListResponse;
 import com.doctris.care.entities.Account;
-import com.doctris.care.domain.AccountResponse;
 import com.doctris.care.entities.Blog;
 import com.doctris.care.entities.Booking;
 import com.doctris.care.entities.Category;
@@ -69,6 +69,19 @@ public interface ApiService {
                                   @Part("phone") RequestBody phone,
                                   @Part("address") RequestBody address,
                                   @Part MultipartBody.Part avatar);
+
+    // update patient info
+    @Multipart
+    @PATCH("collections/patient/records/{id}")
+    Call<Patient> updatePatientInfo(@Header("Authorization") String token,
+                                    @Path("id") String id,
+                                    @Part("name") RequestBody name,
+                                    @Part("account") RequestBody account,
+                                    @Part("date_of_birth") RequestBody dateOfBirth,
+                                    @Part("gender") RequestBody gender,
+                                    @Part("phone") RequestBody phone,
+                                    @Part("address") RequestBody address,
+                                    @Part MultipartBody.Part avatar);
 
     // service list
     @GET("collections/service/records")

@@ -6,6 +6,8 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,7 +15,6 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -28,38 +29,45 @@ import com.developer.kalert.KAlertDialog;
 import com.doctris.care.R;
 import com.doctris.care.entities.Patient;
 import com.doctris.care.repository.PatientRepository;
+import com.doctris.care.storage.SharedPrefManager;
 import com.doctris.care.utils.AlertDialogUtil;
 import com.doctris.care.utils.RealPathUtil;
 import com.doctris.care.utils.ValidateUtil;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import droidninja.filepicker.FilePickerBuilder;
 import droidninja.filepicker.FilePickerConst;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class PatientRegisterActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
+public class PatientInfoActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
     private EditText etName;
     private EditText etDateOfBirth;
     private RadioGroup rgGender;
     private RadioButton rbGender;
     private EditText etAddress;
     private EditText etPhone;
-    private ImageView ivAvatar;
+    private CircleImageView ivAvatar;
     private Button btnChooseImage;
     private Button btnSave;
+    private Button backHome;
     private ArrayList<Uri> path = new ArrayList<>();
+    private Patient patient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patient_register);
+        setContentView(R.layout.patient_information);
+        patient = new Patient();
         bindingView();
+        bindingData();
         bindingAction();
     }
 
@@ -72,11 +80,13 @@ public class PatientRegisterActivity extends AppCompatActivity implements EasyPe
         ivAvatar = findViewById(R.id.iv_avatar);
         btnChooseImage = findViewById(R.id.btn_change_avatar);
         btnSave = findViewById(R.id.btn_save);
+        backHome = findViewById(R.id.btn_back);
     }
 
     private void bindingAction() {
         btnChooseImage.setOnClickListener(this::onClickChooseImage);
         btnSave.setOnClickListener(this::onClickSave);
+        backHome.setOnClickListener(this::onClickBack);
         etDateOfBirth.setOnClickListener(this::onClickDateOfBirth);
     }
 
@@ -87,33 +97,63 @@ public class PatientRegisterActivity extends AppCompatActivity implements EasyPe
         datePickerDialog.show();
     }
 
+    private void onClickBack(View view) {
+        finish();
+    }
+
     private void onClickSave(View view) {
+        getUriFromImageView(ivAvatar);
         if (bindingValidate()) {
             AlertDialogUtil.loading(this);
             String realPath = RealPathUtil.getRealPath(this, resizeImage(path.get(0)));
             File avatar = new File(realPath);
-            Patient patient = new Patient();
-            patient.setName(etName.getText().toString());
-            patient.setDateOfBirth(convertDate(etDateOfBirth.getText().toString()));
-            patient.setAddress(etAddress.getText().toString());
-            patient.setPhone(Integer.parseInt(etPhone.getText().toString()));
-            patient.setGender(getGender());
-            PatientRepository.getInstance().savePatientInfo(patient, avatar).observe(this, status -> {
+            Patient patientUpdate = new Patient();
+            patientUpdate.setId(patient.getId());
+            patientUpdate.setName(etName.getText().toString());
+            patientUpdate.setDateOfBirth(convertDate(etDateOfBirth.getText().toString()));
+            patientUpdate.setAddress(etAddress.getText().toString());
+            patientUpdate.setPhone(Integer.parseInt(etPhone.getText().toString()));
+            patientUpdate.setGender(getGenderChecked());
+            PatientRepository.getInstance().updatePatientInfo(patientUpdate, avatar).observe(this, status -> {
                 AlertDialogUtil.stop();
                 if (status.equals("success")) {
-                    KAlertDialog.KAlertClickListener listener = sDialog -> {
-                        sDialog.dismissWithAnimation();
-                        Intent intent = new Intent(this, HomeActivity.class);
-                        startActivity(intent);
-                        finish();
-                    };
-                   AlertDialogUtil.success(this, "Đăng ký thành công", "Đăng ký thành công", "OK", listener);
-                } else if(status.equals("duplicate")) {
-                    AlertDialogUtil.error(this, "Đăng ký thất bại", "Số điện thoại đã tồn lại", "OK", null);
+                    AlertDialogUtil.success(this, "Cập nhật thông tin", "Cập nhật thành công", "OK", KAlertDialog::dismissWithAnimation);
                 } else {
-                    AlertDialogUtil.error(this, "Đăng ký thất bại", "Đăng ký thất bại", "OK", null);
+                    AlertDialogUtil.error(this, "Cập nhật thông tin", "Cập nhật thất bại", "OK", null);
                 }
             });
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void bindingData() {
+        patient = SharedPrefManager.getInstance().get("patient", Patient.class);
+        etName.setText(patient.getName());
+        etDateOfBirth.setText(patient.getDateOfBirth().split(" ")[0].split("-")[2] + "/" + patient.getDateOfBirth().split(" ")[0].split("-")[1] + "/" + patient.getDateOfBirth().split(" ")[0].split("-")[0]);
+        etAddress.setText(patient.getAddress());
+        etPhone.setText("0" + patient.getPhone());
+        Glide.with(this).load(patient.getAvatar()).into(ivAvatar);
+        if (patient.isGender()) {
+            rbGender = findViewById(R.id.rb_male);
+        } else {
+            rbGender = findViewById(R.id.rb_female);
+        }
+        rbGender.setChecked(true);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+        if (requestCode == 100 && perms.size() == 2) {
+            imagePicker();
+        }
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this).build().show();
+        } else {
+            EasyPermissions.requestPermissions(this, "Hãy cấp quyền camera và bộ nhớ", 100, perms.toArray(new String[0]));
         }
     }
 
@@ -175,40 +215,6 @@ public class PatientRegisterActivity extends AppCompatActivity implements EasyPe
         }
     }
 
-    private boolean getGender() {
-        int selectedId = rgGender.getCheckedRadioButtonId();
-        rbGender = findViewById(selectedId);
-        return rbGender.getText().toString().equals("Nam");
-    }
-
-    @Override
-    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
-        if (requestCode == 100 && perms.size() == 2) {
-            imagePicker();
-        }
-    }
-
-    @Override
-    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            new AppSettingsDialog.Builder(this).build().show();
-        } else {
-            EasyPermissions.requestPermissions(this, "Hãy cấp quyền camera và bộ nhớ", 100, perms.toArray(new String[0]));
-        }
-    }
-
-    private String convertDate(String date) {
-        String[] arr = date.split("/");
-        int day = Integer.parseInt(arr[0]);
-        int month = Integer.parseInt(arr[1]);
-        if (day < 10) {
-            arr[0] = "0" + day;
-        }
-        if (month < 10) {
-            arr[1] = "0" + month;
-        }
-        return arr[2] + "-" + arr[1] + "-" + arr[0];
-    }
 
     private Uri resizeImage(Uri uri) {
         try {
@@ -226,6 +232,19 @@ public class PatientRegisterActivity extends AppCompatActivity implements EasyPe
         return null;
     }
 
+    private boolean getGenderChecked() {
+        int id = rgGender.getCheckedRadioButtonId();
+        return id == R.id.rb_male;
+    }
+
+    private void getUriFromImageView(CircleImageView imageView) {
+        Drawable drawable = imageView.getDrawable();
+        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        path.add(0, resizeImage(Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "Title", null))));
+    }
+
     private boolean bindingValidate() {
         return ValidateUtil.isPictureValid(path, this)
                 && ValidateUtil.isNameValid(etName)
@@ -234,5 +253,18 @@ public class PatientRegisterActivity extends AppCompatActivity implements EasyPe
                 && ValidateUtil.isGenderValid(rgGender, this)
                 && ValidateUtil.isAddressValid(etAddress);
 
+    }
+
+    private String convertDate(String date) {
+        String[] arr = date.split("/");
+        int day = Integer.parseInt(arr[0]);
+        int month = Integer.parseInt(arr[1]);
+        if (day < 10) {
+            arr[0] = "0" + day;
+        }
+        if (month < 10) {
+            arr[1] = "0" + month;
+        }
+        return arr[2] + "-" + arr[1] + "-" + arr[0];
     }
 }

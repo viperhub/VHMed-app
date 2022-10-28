@@ -83,7 +83,7 @@ public class PatientRepository {
                     SharedPrefManager.getInstance().put("patient", response.body());
                     status.setValue(SUCCESS);
                 } else {
-                    if(response.code() == 400) {
+                    if (response.code() == 400) {
                         status.setValue("duplicate");
                     } else {
                         status.setValue(ERROR);
@@ -93,6 +93,36 @@ public class PatientRepository {
 
             @Override
             public void onFailure(@NonNull Call<Patient> call, @NonNull Throwable t) {
+            }
+        });
+        return status;
+    }
+
+    public LiveData<String> updatePatientInfo(Patient patient, File avatarFile) {
+        status = new MutableLiveData<>();
+        RequestBody name = RequestBody.create(MediaType.parse(MULTI_PART_FORM_DATA), patient.getName());
+        RequestBody account = RequestBody.create(MediaType.parse(MULTI_PART_FORM_DATA), SharedPrefManager.getInstance().get("account", Account.class).getUserId());
+        RequestBody dateOfBirth = RequestBody.create(MediaType.parse(MULTI_PART_FORM_DATA), patient.getDateOfBirth());
+        RequestBody phone = RequestBody.create(MediaType.parse(MULTI_PART_FORM_DATA), String.valueOf(patient.getPhone()));
+        RequestBody address = RequestBody.create(MediaType.parse(MULTI_PART_FORM_DATA), patient.getAddress());
+        RequestBody gender = RequestBody.create(MediaType.parse(MULTI_PART_FORM_DATA), patient.isGender() ? "true" : "false");
+        RequestBody avatar = RequestBody.create(MediaType.parse(MULTI_PART_FORM_DATA), avatarFile);
+        MultipartBody.Part avatarPart = MultipartBody.Part.createFormData("avatar", avatarFile.getName(), avatar);
+        Call<Patient> call = RetrofitClient.getInstance().getApi().updatePatientInfo("User " + SharedPrefManager.getInstance().get("token", String.class), patient.getId(), name, account, dateOfBirth, gender, phone, address, avatarPart);
+        call.enqueue(new retrofit2.Callback<Patient>() {
+            @Override
+            public void onResponse(@NonNull Call<Patient> call, @NonNull Response<Patient> response) {
+                if (response.isSuccessful()) {
+                    SharedPrefManager.getInstance().put("patient", response.body());
+                    status.setValue(SUCCESS);
+                } else {
+                    status.setValue(ERROR);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Patient> call, @NonNull Throwable t) {
+                status.setValue(ERROR);
             }
         });
         return status;
