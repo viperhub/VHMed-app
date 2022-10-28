@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "853302379247",
+    "project_id": "doctris-cloud",
+    "storage_bucket": "doctris-cloud.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:853302379247:android:006a44e66285178a24911a",
+        "android_client_info": {
+          "package_name": "com.doctris.care"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "853302379247-i380aqeaej9qa4bqkc8tqf0umv7edqdp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.doctris.care",
+            "certificate_hash": "dab116ac63625a5ed30da149717401ab09cbfad4"
+          }
+        },
+        {
+          "client_id": "853302379247-hb3duv3fdeggiqnr8au64m9p1h12hg3e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_jZT5d7swAH4emPoieTg_YfOmGmNbkPE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "853302379247-hb3duv3fdeggiqnr8au64m9p1h12hg3e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
