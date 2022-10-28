@@ -17,6 +17,7 @@ import com.doctris.care.domain.ListResponse;
 import com.doctris.care.entities.Blog;
 import com.doctris.care.repository.BlogRepository;
 import com.doctris.care.ui.adapter.BlogAdapter;
+import com.doctris.care.ui.adapter.BlogHorizontalAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.List;
 public class BlogActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewBlog;
+    private RecyclerView recyclerViewBlogHorizontal;
     private ProgressBar progressBar;
     private NestedScrollView nestedScrollView;
     private Button backHome;
@@ -31,10 +33,12 @@ public class BlogActivity extends AppCompatActivity {
     private static final int LIMIT = 10;
     private int totalPage = 0;
     private List<Blog> listBlog;
+    private List<Blog> listBlogHorizontal;
     private String fillter = null;
     private SearchView searchView;
 
     private void bindingViews() {
+        recyclerViewBlogHorizontal = findViewById(R.id.recyclerview_blog_horizontal);
         recyclerViewBlog = findViewById(R.id.recyclerview_blog);
         progressBar = findViewById(R.id.progressBar);
         nestedScrollView = findViewById(R.id.idNestedSV);
@@ -63,7 +67,26 @@ public class BlogActivity extends AppCompatActivity {
         });
     }
 
+    private void getBlogHorizontalData(List<Blog> listBlogHorizontal){
+        progressBar.setVisibility(View.VISIBLE);
+        LiveData<ListResponse<Blog>> blogHorizontalLiveData = BlogRepository.getInstance().getBlog(page, 5, "-viewer", fillter);
+        blogHorizontalLiveData.observe(this, blogHorizontals -> {
+            if (blogHorizontals != null) {
+                totalPage = blogHorizontals.getTotalPages();
+                listBlogHorizontal.addAll(blogHorizontals.getItems());
+                BlogHorizontalAdapter blogHorizontalAdapter = new BlogHorizontalAdapter(listBlogHorizontal, this);
+                recyclerViewBlogHorizontal.setAdapter(blogHorizontalAdapter);
+            }
+            progressBar.setVisibility(View.GONE);
+        });
+    }
+
     private void initLinearLayout() {
+        LinearLayoutManager linearLayoutManagerHORIZONTAL = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewBlogHorizontal.setLayoutManager(linearLayoutManagerHORIZONTAL);
+
+        getBlogHorizontalData(listBlogHorizontal);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerViewBlog.setLayoutManager(linearLayoutManager);
 
@@ -73,6 +96,7 @@ public class BlogActivity extends AppCompatActivity {
             progressBar.setVisibility(View.VISIBLE);
             if (scrollY > (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()) * 0.8 && page < totalPage) {
                 page++;
+                getBlogHorizontalData(listBlogHorizontal);
                 getBlogData(listBlog);
             }
         });
@@ -83,6 +107,7 @@ public class BlogActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blog);
         listBlog = new ArrayList<>();
+        listBlogHorizontal = new ArrayList<>();
         bindingViews();
         bindingActions();
         initLinearLayout();

@@ -247,6 +247,7 @@
             android:id="@+id/rv_blog" />
 
         <TextView
+            android:id="@+id/tv_see_all_blog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -255,6 +256,4 @@
             android:textSize="15sp"
             android:textStyle="bold" />
     </LinearLayout>
-
-
 </ScrollView>

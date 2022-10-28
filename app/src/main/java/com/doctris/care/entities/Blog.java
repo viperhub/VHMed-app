@@ -19,10 +19,20 @@ public class Blog {
     private String description;
     @SerializedName("@expand")
     private ExpandResponse expand;
+    @SerializedName("viewer")
+    private int viewer;
     @SerializedName("created")
     private String dateCreated;
     @SerializedName("updated")
     private String dateUpdated;
+
+    public int getViewer() {
+        return viewer;
+    }
+
+    public void setViewer(int viewer) {
+        this.viewer = viewer;
+    }
 
     public String getId() {
         return id;
@@ -99,6 +109,7 @@ public class Blog {
                 ", category=" + expand.getCategory().toString() +
                 ", dateCreated=" + dateCreated +
                 ", dateUpdated=" + dateUpdated +
+                ", viewer=" + viewer +
                 '}';
     }
 }
