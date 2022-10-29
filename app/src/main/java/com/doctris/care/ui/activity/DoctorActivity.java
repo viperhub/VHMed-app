@@ -82,11 +82,11 @@ public class DoctorActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManagerHORIZONTAL = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewCategory.setLayoutManager(linearLayoutManagerHORIZONTAL);
         listCategory = new ArrayList<>();
-        listCategory.add(new Category(null, "Tất cả", ""));
+        listCategory.add(new Category(null, "Tất cả", "", "https://icons.veryicon.com/png/o/miscellaneous/cloud-computing-red-and-blue/select-all-invert.png"));
         LiveData<List<Category>> categoryLiveData = CategoryRepository.getInstance().getCategories();
         categoryLiveData.observe(this, categories -> {
             listCategory.addAll(categories);
-            CategoryAdapter categoryAdapter = new CategoryAdapter(listCategory, this);
+            CategoryAdapter categoryAdapter = new CategoryAdapter(listCategory, this, R.layout.category_view_item);
             recyclerViewCategory.setAdapter(categoryAdapter);
         });
 

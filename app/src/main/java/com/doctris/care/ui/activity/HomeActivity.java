@@ -3,10 +3,13 @@ package com.doctris.care.ui.activity;
 import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -99,7 +102,13 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void openFabNewIcon() {
-        fab.setOnClickListener(v -> getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_up, R.anim.slide_down).replace(R.id.fragment_container, newFragment).commit());
+        fab.setOnClickListener(this:: fabOnClick);
+    }
+
+    private void fabOnClick(View view) {
+        Intent intent = new Intent(this, CategoryBookingActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_up,  R.anim.no_animation);
     }
 
 }

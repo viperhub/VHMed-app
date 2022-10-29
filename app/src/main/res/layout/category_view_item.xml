@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -11,23 +10,29 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="#853892FF"
         android:paddingHorizontal="10dp"
         android:paddingVertical="7dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/category_image"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="10dp" />
 
         <TextView
             android:id="@+id/tv_id_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_name_category"
             android:layout_width="wrap_content"
             android:layout_height="33dp"
+            android:gravity="center"
             android:text="@string/app_name"
-            android:textColor="#FDFDFD"
-            android:gravity="center"/>
+            android:textColor="#FDFDFD" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

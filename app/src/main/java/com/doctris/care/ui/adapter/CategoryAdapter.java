@@ -19,17 +19,19 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder>{
     private final List<Category> listCategory;
     private final Context mContext;
     private final LayoutInflater layoutInflater;
+    private int layoutId;
 
-    public CategoryAdapter(List<Category> listCategory, Context mContext) {
+    public CategoryAdapter(List<Category> listCategory, Context mContext, int layoutId) {
         this.listCategory = listCategory;
         this.mContext = mContext;
+        this.layoutId = layoutId;
         this.layoutInflater = LayoutInflater.from(mContext);
     }
 
     @NonNull
     @Override
     public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.category_view_item, parent, false);
+        View view = layoutInflater.inflate(layoutId, parent, false);
         return new CategoryViewHolder(view, mContext);
     }
 

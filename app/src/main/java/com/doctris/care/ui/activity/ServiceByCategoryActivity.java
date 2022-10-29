@@ -1,5 +1,10 @@
 package com.doctris.care.ui.activity;
 
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.widget.NestedScrollView;
@@ -7,26 +12,16 @@ import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ProgressBar;
-
 import com.doctris.care.R;
 import com.doctris.care.domain.ListResponse;
-import com.doctris.care.entities.Category;
 import com.doctris.care.entities.Service;
-import com.doctris.care.listener.RecyclerTouchListener;
-import com.doctris.care.repository.CategoryRepository;
 import com.doctris.care.repository.ServiceRepository;
-import com.doctris.care.ui.adapter.CategoryAdapter;
 import com.doctris.care.ui.adapter.ServiceAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServiceActivity extends AppCompatActivity {
-
+public class ServiceByCategoryActivity extends AppCompatActivity {
     private RecyclerView recyclerViewCategory;
     private RecyclerView recyclerViewService;
     private ProgressBar progressBar;
@@ -37,7 +32,6 @@ public class ServiceActivity extends AppCompatActivity {
     private int totalPage = 0;
     private List<Service> listService;
     private String filter = null;
-    private List<Category> listCategory;
     private SearchView searchView;
 
     private void bindingViews() {
@@ -51,44 +45,18 @@ public class ServiceActivity extends AppCompatActivity {
 
     private void bindingActions() {
         backHome.setOnClickListener(this::onClickBackHome);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                // not support yet
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                if (newText != null && !newText.isEmpty()) {
-                    filter = "(category.category_name~'" + newText + "' || name~'" + newText + "')";
-                    listService.clear();
-                    getServiceData(listService);
-                } else {
-                    filter = null;
-                    getServiceData(listService);
-                }
-                return false;
-            }
-        });
     }
 
     private void onClickBackHome(View view) {
         finish();
     }
 
-    private void initLinearLayout() {
-        LinearLayoutManager linearLayoutManagerHORIZONTAL = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerViewCategory.setLayoutManager(linearLayoutManagerHORIZONTAL);
-        listCategory = new ArrayList<>();
-        listCategory.add(new Category(null, "Tất cả", "", "https://icons.veryicon.com/png/o/miscellaneous/cloud-computing-red-and-blue/select-all-invert.png"));
-        LiveData<List<Category>> categoryLiveData = CategoryRepository.getInstance().getCategories();
-        categoryLiveData.observe(this, categories -> {
-            listCategory.addAll(categories);
-            CategoryAdapter categoryAdapter = new CategoryAdapter(listCategory, this, R.layout.category_view_item);
-            recyclerViewCategory.setAdapter(categoryAdapter);
-        });
+    private void hiddenFeature() {
+        searchView.setVisibility(View.GONE);
+        recyclerViewCategory.setVisibility(View.GONE);
+    }
 
+    private void initLinearLayout() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerViewService.setLayoutManager(linearLayoutManager);
 
@@ -102,26 +70,14 @@ public class ServiceActivity extends AppCompatActivity {
         });
     }
 
-    private void onclickCategoryItem() {
-        recyclerViewCategory.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerViewCategory, new RecyclerTouchListener.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                String categoryId = listCategory.get(position).getId();
-                if (categoryId == null) {
-                    filter = null;
-                } else {
-                    filter = "(category='" + categoryId + "')";
-                }
-                page = 1;
-                listService.clear();
-                getServiceData(listService);
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-                // do nothing
-            }
-        }));
+    public void getId() {
+        String categoryId = getIntent().getStringExtra("id");
+        if (categoryId == null) {
+            filter = null;
+        } else {
+            filter = "(category='" + categoryId + "')";
+        }
+        page = 1;
     }
 
     private void getServiceData(List<Service> serviceList) {
@@ -144,8 +100,9 @@ public class ServiceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_service);
         listService = new ArrayList<>();
         bindingViews();
+        hiddenFeature();
         bindingActions();
+        getId();
         initLinearLayout();
-        onclickCategoryItem();
     }
 }
