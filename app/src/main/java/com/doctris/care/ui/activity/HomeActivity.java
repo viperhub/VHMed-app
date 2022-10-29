@@ -15,7 +15,7 @@ import com.doctris.care.R;
 import com.doctris.care.ui.fragment.AccountFragment;
 import com.doctris.care.ui.fragment.HomeFragment;
 import com.doctris.care.ui.fragment.NewFragment;
-import com.doctris.care.ui.fragment.SearchFragment;
+import com.doctris.care.ui.fragment.BlogFragment;
 import com.doctris.care.ui.fragment.UpComingFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,7 +31,7 @@ public class HomeActivity extends AppCompatActivity {
     private final HomeFragment homeFragment = new HomeFragment();
     private final AccountFragment accountFragment = new AccountFragment();
     private final NewFragment newFragment = new NewFragment();
-    private final SearchFragment searchFragment = new SearchFragment();
+    private final BlogFragment blogFragment = new BlogFragment();
     private final UpComingFragment upComingFragment = new UpComingFragment();
 
     @SuppressLint("NonConstantResourceId")
@@ -51,7 +51,7 @@ public class HomeActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, upComingFragment).commit();
                     break;
                 case R.id.search:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, searchFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, blogFragment).commit();
                     break;
                 case R.id.account:
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, accountFragment).commit();

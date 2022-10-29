@@ -6,8 +6,8 @@
         android:title="Trang chủ" />
     <item
         android:id="@+id/search"
-        android:icon="@drawable/ic_baseline_search_24"
-        android:title="Tìm kiếm" />
+        android:icon="@drawable/ic_baseline_newspaper_24"
+        android:title="Tin tức" />
     <item
         android:id="@+id/collections"
         android:enabled="false"
