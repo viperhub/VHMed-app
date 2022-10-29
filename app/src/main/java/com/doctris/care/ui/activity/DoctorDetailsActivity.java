@@ -82,6 +82,14 @@ public class DoctorDetailsActivity extends AppCompatActivity {
 
     public void bindingAction(){
         btnBack.setOnClickListener(this::onClickBtnBack);
+        btnBook.setOnClickListener(this::onClickBtnBook);
+    }
+
+    private void onClickBtnBook(View view) {
+        Intent intent = new Intent(this, BookingActivity.class);
+        intent.putExtra("id", getIntent().getStringExtra("id"));
+        intent.putExtra("type", "doctor");
+        startActivity(intent);
     }
 
     private void onClickBtnBack(View view) {

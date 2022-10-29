@@ -67,6 +67,14 @@ public class ServiceDetailsActivity extends AppCompatActivity {
 
     public void bindingAction(){
         btnBack.setOnClickListener(this::onClickBtnBack);
+        btnBookingService.setOnClickListener(this::onClickBtnBookingService);
+    }
+
+    private void onClickBtnBookingService(View view) {
+        Intent intent = new Intent(this, BookingActivity.class);
+        intent.putExtra("id", getIntent().getStringExtra("id"));
+        intent.putExtra("type", "service");
+        startActivity(intent);
     }
 
     private void onClickBtnBack(View view) {
