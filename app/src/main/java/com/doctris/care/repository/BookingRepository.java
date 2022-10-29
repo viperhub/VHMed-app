@@ -96,7 +96,7 @@ public class BookingRepository {
             jsonParams.put("price", booking.getExpand().getService().getPrice());
         } else {
             jsonParams.put("doctor", booking.getExpand().getDoctor().getId());
-            jsonParams.put("price", booking.getExpand().getService().getPrice());
+            jsonParams.put("price", booking.getExpand().getDoctor().getPrice());
         }
         jsonParams.put("date_time", booking.getDateTime());
         jsonParams.put("description", booking.getDescription());
