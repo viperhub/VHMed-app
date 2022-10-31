@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string-array name="payment" tools:ignore="MissingTranslation">
+        <item>Chọn phương thức thanh toán</item>
+        <item>Thanh toán tại phòng khám</item>
+        <item>Thanh toán qua ví điện tử</item>
+    </string-array>
+</resources>

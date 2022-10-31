@@ -9,11 +9,14 @@ public class Category {
     private String categoryName;
     @SerializedName("description")
     private String description;
+    @SerializedName("image")
+    private String image;
 
-    public Category(String id, String categoryName, String description) {
+    public Category(String id, String categoryName, String description, String image) {
         this.id = id;
         this.categoryName = categoryName;
         this.description = description;
+        this.image = image;
     }
 
     public String getId() {
@@ -38,6 +41,18 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImage() {
+        if (id == null) {
+            return image;
+        } else {
+            return "http://doctris-cloud.koreacentral.cloudapp.azure.com/api/files/category/" + id + "/" + image;
+        }
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override

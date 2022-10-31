@@ -147,4 +147,9 @@ public interface ApiService {
     Call<Void> updateViewerBlog (@Header("Authorization") String token,
                                  @Path("id") String id,
                                  @Part("viewer") RequestBody viewer);
+
+    // save booking infomation
+    @POST("collections/booking/records")
+    Call<Booking> saveBooking(@Header("Authorization") String token,
+                              @Body RequestBody params);
 }

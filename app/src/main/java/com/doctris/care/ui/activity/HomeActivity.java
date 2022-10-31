@@ -3,10 +3,13 @@ package com.doctris.care.ui.activity;
 import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +18,7 @@ import com.doctris.care.R;
 import com.doctris.care.ui.fragment.AccountFragment;
 import com.doctris.care.ui.fragment.HomeFragment;
 import com.doctris.care.ui.fragment.NewFragment;
-import com.doctris.care.ui.fragment.SearchFragment;
+import com.doctris.care.ui.fragment.BlogFragment;
 import com.doctris.care.ui.fragment.UpComingFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,7 +34,7 @@ public class HomeActivity extends AppCompatActivity {
     private final HomeFragment homeFragment = new HomeFragment();
     private final AccountFragment accountFragment = new AccountFragment();
     private final NewFragment newFragment = new NewFragment();
-    private final SearchFragment searchFragment = new SearchFragment();
+    private final BlogFragment blogFragment = new BlogFragment();
     private final UpComingFragment upComingFragment = new UpComingFragment();
 
     @SuppressLint("NonConstantResourceId")
@@ -51,7 +54,7 @@ public class HomeActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, upComingFragment).commit();
                     break;
                 case R.id.search:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, searchFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, blogFragment).commit();
                     break;
                 case R.id.account:
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, accountFragment).commit();
@@ -99,7 +102,13 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void openFabNewIcon() {
-        fab.setOnClickListener(v -> getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_up, R.anim.slide_down).replace(R.id.fragment_container, newFragment).commit());
+        fab.setOnClickListener(this:: fabOnClick);
+    }
+
+    private void fabOnClick(View view) {
+        Intent intent = new Intent(this, CategoryBookingActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_up,  R.anim.no_animation);
     }
 
 }

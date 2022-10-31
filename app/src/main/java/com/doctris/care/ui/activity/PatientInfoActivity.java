@@ -4,12 +4,10 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -21,8 +19,6 @@ import android.widget.RadioGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.developer.kalert.KAlertDialog;
@@ -158,26 +154,12 @@ public class PatientInfoActivity extends AppCompatActivity implements EasyPermis
     }
 
     private void onClickChooseImage(View view) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-            if (EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                imagePicker();
-            } else {
-                EasyPermissions.requestPermissions(this, "Hãy cấp quyền camera và bộ nhớ", 100, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            }
+        String[] permissions = {android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+        if (EasyPermissions.hasPermissions(this, permissions)) {
+            imagePicker();
         } else {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED) {
-                imagePickerTiramisu();
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
-            }
+            EasyPermissions.requestPermissions(this, "Hãy cấp quyền camera và bộ nhớ", 100, permissions);
         }
-    }
-
-    // photo picker for android 13 and above
-    private void imagePickerTiramisu() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        startActivityForResult(intent, 100);
     }
 
     private void imagePicker() {
@@ -200,18 +182,10 @@ public class PatientInfoActivity extends AppCompatActivity implements EasyPermis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-            if (requestCode == FilePickerConst.REQUEST_CODE_PHOTO && resultCode == RESULT_OK && data != null) {
-                path = new ArrayList<>();
-                path.addAll(data.getParcelableArrayListExtra(FilePickerConst.KEY_SELECTED_MEDIA));
-                Glide.with(this).load(path.get(0)).into(ivAvatar);
-            }
-        } else {
-            if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
-                Uri uri = data.getData();
-                ivAvatar.setImageURI(uri);
-                path.add(uri);
-            }
+        if (requestCode == FilePickerConst.REQUEST_CODE_PHOTO && resultCode == RESULT_OK && data != null) {
+            path = new ArrayList<>();
+            path.addAll(data.getParcelableArrayListExtra(FilePickerConst.KEY_SELECTED_MEDIA));
+            Glide.with(this).load(path.get(0)).into(ivAvatar);
         }
     }
 

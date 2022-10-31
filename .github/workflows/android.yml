@@ -2,9 +2,9 @@ name: Android CI
 
 on:
   push:
-    branches: [ "trung-dev" ]
+    branches: [ "wip" ]
   pull_request:
-    branches: [ "trung-dev" ]
+    branches: [ "wip" ]
 
 jobs:
   build:
