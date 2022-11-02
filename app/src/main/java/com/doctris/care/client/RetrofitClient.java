@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
     private static Retrofit retrofit = null;
-    private static final String BASE_URL = "http://doctris-cloud.koreacentral.cloudapp.azure.com/api/";
+    private static final String BASE_URL = "https://doctriscare.ml/api/";
     private static RetrofitClient mInstance;
 
     private RetrofitClient() {

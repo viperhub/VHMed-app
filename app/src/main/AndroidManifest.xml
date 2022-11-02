@@ -54,7 +54,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="doctriscare.ml"
+                    android:host="verify.doctriscare.ml"
                     android:pathPrefix="/confirm-verification"
                     android:scheme="https" />
             </intent-filter>
@@ -74,7 +74,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="doctriscare.ml"
+                    android:host="verify.doctriscare.ml"
                     android:pathPrefix="/forgot-password"
                     android:scheme="https" />
             </intent-filter>
