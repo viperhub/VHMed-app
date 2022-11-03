@@ -161,10 +161,6 @@ public class BookingActivity extends AppCompatActivity {
         String description = etDescription.getText().toString();
         String payment = spnPayment.getSelectedItem().toString();
         payment = payment.equals("Thanh toán qua ví điện tử") ? "vnpay" : "pay as you go";
-        if (payment.equals("vnpay")) {
-            ToastUtil.warning(this, "Chức năng đang được phát triển");
-            return;
-        }
         Booking booking = new Booking();
         ExpandResponse expandResponse = new ExpandResponse();
         expandResponse.setDoctor(doctor);

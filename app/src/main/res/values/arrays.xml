@@ -3,6 +3,5 @@
     <string-array name="payment" tools:ignore="MissingTranslation">
         <item>Chọn phương thức thanh toán</item>
         <item>Thanh toán tại phòng khám</item>
-        <item>Thanh toán qua ví điện tử</item>
     </string-array>
 </resources>
