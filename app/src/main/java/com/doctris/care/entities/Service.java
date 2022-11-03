@@ -58,7 +58,7 @@ public class Service {
     }
 
     public String getImage() {
-        return "http://doctris-cloud.koreacentral.cloudapp.azure.com/api/files/service/" + id + "/" + image;
+        return "https://doctriscare.ml/api/files/service/" + id + "/" + image;
     }
 
     public void setImage(String image) {

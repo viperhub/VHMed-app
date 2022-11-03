@@ -59,7 +59,7 @@ public class Blog {
     }
 
     public String getImage() {
-        return "http://doctris-cloud.koreacentral.cloudapp.azure.com/api/files/blog/" + id + "/" + image;
+        return "https://doctriscare.ml/api/files/blog/" + id + "/" + image;
     }
 
     public void setImage(String image) {
