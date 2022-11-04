@@ -139,6 +139,10 @@
         <activity
             android:name=".ui.activity.ServiceByCategoryActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".ui.activity.FeedbackActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

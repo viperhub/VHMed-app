@@ -8,6 +8,7 @@ import com.doctris.care.entities.Booking;
 import com.doctris.care.entities.Category;
 import com.doctris.care.entities.Doctor;
 import com.doctris.care.entities.Patient;
+import com.doctris.care.entities.Rate;
 import com.doctris.care.entities.Service;
 
 import okhttp3.MultipartBody;
@@ -144,12 +145,30 @@ public interface ApiService {
     // increase viewer blog
     @Multipart
     @PATCH("collections/blog/records/{id}")
-    Call<Void> updateViewerBlog (@Header("Authorization") String token,
-                                 @Path("id") String id,
-                                 @Part("viewer") RequestBody viewer);
+    Call<Void> updateViewerBlog(@Header("Authorization") String token,
+                                @Path("id") String id,
+                                @Part("viewer") RequestBody viewer);
 
     // save booking infomation
     @POST("collections/booking/records")
     Call<Booking> saveBooking(@Header("Authorization") String token,
                               @Body RequestBody params);
+
+    // cancel booking
+    @PATCH("collections/booking/records/{id}")
+    Call<Void> cancelBooking(@Header("Authorization") String token,
+                             @Path("id") String id,
+                             @Body RequestBody params);
+
+    // booking feedback
+    @PATCH("collections/booking/records/{id}")
+    Call<Void> feedbackBooking(@Header("Authorization") String token,
+                               @Path("id") String id,
+                               @Body RequestBody params);
+
+    // save rate
+    @POST("collections/rate/records")
+    Call<Void> saveRate(@Header("Authorization") String token,
+                        @Body RequestBody params);
+
 }

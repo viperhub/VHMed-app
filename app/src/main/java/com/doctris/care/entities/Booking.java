@@ -24,11 +24,13 @@ public class Booking {
     private String price;
     @SerializedName("created")
     private String created;
+    @SerializedName("feedback")
+    private boolean feedback;
 
     public Booking() {
     }
 
-    public Booking(String id, ExpandResponse expand, String dateTime, String description, String paymentMethod, String paymentStatus, String bookingStatus, String price, String created) {
+    public Booking(String id, ExpandResponse expand, String dateTime, String description, String paymentMethod, String paymentStatus, String bookingStatus, String price, String created, boolean feedback) {
         this.id = id;
         this.expand = expand;
         this.dateTime = dateTime;
@@ -38,6 +40,7 @@ public class Booking {
         this.bookingStatus = bookingStatus;
         this.price = price;
         this.created = created;
+        this.feedback = feedback;
     }
 
     public String getId() {
@@ -110,5 +113,13 @@ public class Booking {
 
     public void setCreated(String created) {
         this.created = created;
+    }
+
+    public boolean isFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(boolean feedback) {
+        this.feedback = feedback;
     }
 }
