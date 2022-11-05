@@ -88,7 +88,7 @@ public class BlogActivity extends AppCompatActivity {
                     blogAdapter = new BlogAdapter(blogList, this);
                     recyclerViewBlog.setAdapter(blogAdapter);
                 } else {
-                    blogList.addAll(lastIndex + 1, blogs.getItems());
+                    blogList.addAll(lastIndex, blogs.getItems());
                     blogAdapter.notifyItemRangeInserted(lastIndex, blogs.getItems().size());
                 }
                 progressBar.setVisibility(View.GONE);
