@@ -24,6 +24,15 @@ public class Doctor {
     private String image;
     @SerializedName("price")
     private int price;
+    private float rating;
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
 
     public String getId() {
         return id;
