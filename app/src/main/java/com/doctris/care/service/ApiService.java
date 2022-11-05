@@ -170,5 +170,13 @@ public interface ApiService {
     @POST("collections/rate/records")
     Call<Void> saveRate(@Header("Authorization") String token,
                         @Body RequestBody params);
+    // get vote
+    @GET("collections/rate/records")
+    Call<ListResponse<Rate>> getRate(@Header("Authorization") String token,
+                                     @Query("page") int page,
+                                     @Query("perPage") int perPage,
+                                     @Query("sort") String sort,
+                                     @Query("filter") String filter,
+                                     @Query("expand") String expand);
 
 }
