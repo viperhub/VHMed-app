@@ -129,7 +129,7 @@ public class DoctorActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         LiveData<ListResponse<Rate>> rateData = RateRepository.getInstance().getRates(1, 100000, null, null);
         rateData.observe(this, rateListResponse -> {
-            LiveData<ListResponse<Doctor>> doctorData = DoctorRepository.getInstance().getDoctors(page, LIMIT, filter, null);
+            LiveData<ListResponse<Doctor>> doctorData = DoctorRepository.getInstance().getDoctors(page, LIMIT, null, filter);
             doctorData.observe(this, doctors -> {
                 totalPage = doctors.getTotalPages();
                 list.addAll(doctors.getItems());
