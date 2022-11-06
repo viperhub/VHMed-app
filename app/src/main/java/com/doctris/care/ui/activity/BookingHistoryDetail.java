@@ -84,10 +84,11 @@ public class BookingHistoryDetail extends AppCompatActivity {
         new KAlertDialog(this, KAlertDialog.WARNING_TYPE)
                 .setTitleText("Lịch hẹn")
                 .setContentText("Bạn có chắc chắn muốn hủy lịch hẹn này?")
-                .setConfirmClickListener("ĐỒng ý",sDialog -> {
+                .setConfirmClickListener("Đồng ý",sDialog -> {
                     sDialog.dismissWithAnimation();
                     BookingRepository.getInstance().cancelBooking(booking.getId());
                     getData();
+                    btnCancelBooking.setVisibility(View.GONE);
                 })
                 .setCancelClickListener("Không", KAlertDialog::dismissWithAnimation)
                 .show();

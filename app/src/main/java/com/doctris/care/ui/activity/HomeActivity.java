@@ -36,6 +36,7 @@ public class HomeActivity extends AppCompatActivity {
     private final NewFragment newFragment = new NewFragment();
     private final BlogFragment blogFragment = new BlogFragment();
     private final UpComingFragment upComingFragment = new UpComingFragment();
+    private FloatingActionButton fabCall;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -93,12 +94,7 @@ public class HomeActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.action_bar);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         fab = findViewById(R.id.fab);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_items, menu);
-        return super.onCreateOptionsMenu(menu);
+        fabCall = findViewById(R.id.call_support);
     }
 
     private void openFabNewIcon() {
