@@ -4,36 +4,39 @@ import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.developer.kalert.KAlertDialog;
 import com.doctris.care.R;
 import com.doctris.care.ui.fragment.AccountFragment;
 import com.doctris.care.ui.fragment.HomeFragment;
-import com.doctris.care.ui.fragment.NewFragment;
 import com.doctris.care.ui.fragment.BlogFragment;
 import com.doctris.care.ui.fragment.UpComingFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.util.List;
+
+import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks{
 
     private Toolbar toolbar;
     private BottomNavigationView bottomNavigationView;
     private FloatingActionButton fab;
     private final HomeFragment homeFragment = new HomeFragment();
     private final AccountFragment accountFragment = new AccountFragment();
-    private final NewFragment newFragment = new NewFragment();
     private final BlogFragment blogFragment = new BlogFragment();
     private final UpComingFragment upComingFragment = new UpComingFragment();
     private FloatingActionButton fabCall;
@@ -44,6 +47,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         bindingView();
+        bindingAction();
         setSupportActionBar(toolbar);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -107,4 +111,53 @@ public class HomeActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_up,  R.anim.no_animation);
     }
 
+    private void bindingAction(){
+        fabCall.setOnClickListener(this::fabCallOnClick);
+    }
+
+    private void fabCallOnClick(View view) {
+        String permission = android.Manifest.permission.CALL_PHONE;
+        if (EasyPermissions.hasPermissions(this, permission)) {
+            makeCall();
+        } else {
+            EasyPermissions.requestPermissions(this, "Chúng tôi cần quyền gọi điện thoại để liên hệ với tư vấn viên", 1, permission);
+        }
+    }
+
+    private void makeCall(){
+        new KAlertDialog(this, KAlertDialog.WARNING_TYPE)
+                .setTitleText("Bạn có muốn gọi tư vấn viên?")
+                .setContentText("Chúng tôi sẽ gọi cho bạn ngay khi bạn nhấn đồng ý")
+                .setConfirmClickListener("Đồng ý", sDialog -> {
+                    sDialog.dismissWithAnimation();
+                    Intent intent = new Intent(Intent.ACTION_CALL);
+                    intent.setData(Uri.parse("tel:0888195313")); // change the number
+                    intent.setPackage("com.android.server.telecom");
+                    startActivity(intent);
+                })
+                .setCancelClickListener("Hủy", KAlertDialog::dismissWithAnimation)
+                .show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+        if (requestCode == 100 && perms.size() == 2) {
+            makeCall();
+        }
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this).build().show();
+        } else {
+            EasyPermissions.requestPermissions(this, "Hãy cấp quyền gọi điện", 100, perms.toArray(new String[0]));
+        }
+    }
 }
