@@ -4,6 +4,7 @@ import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import com.google.gson.Gson;
 
 public class App extends Application {
@@ -26,6 +27,7 @@ public class App extends Application {
         mGSon = new Gson();
         createNotificationBlogChannel();
         createNotificationBookingChannel();
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
 
     private void createNotificationBookingChannel() {
