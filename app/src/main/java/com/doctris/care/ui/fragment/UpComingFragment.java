@@ -1,7 +1,10 @@
 package com.doctris.care.ui.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
@@ -31,6 +34,7 @@ public class UpComingFragment extends Fragment {
     private static final int LIMIT = 10;
     private int totalPage = 0;
     private List<Booking> listBooking;
+    private Activity activity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,16 +46,25 @@ public class UpComingFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        listBooking = new ArrayList<>();
-        bindingViews(view);
-        initLinearLayout();
+        activity = getActivity();
+        if (isAdded() && activity != null) {
+            listBooking = new ArrayList<>();
+            bindingViews(view);
+            initLinearLayout();
+        }
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        activity = context instanceof Activity ? (Activity) context : null;
     }
 
     private void getBookingHistory(List<Booking> listBooking) {
         LocalDate date = LocalDate.now();
         progressBar.setVisibility(View.VISIBLE);
         LiveData<ListResponse<Booking>> bookingLiveData = BookingRepository.getInstance().getBookingHistory(page, LIMIT, "+date_time", "date_time>='" + date + "' && booking_status='pending'");
-        bookingLiveData.observe(requireActivity(), bookings -> {
+        bookingLiveData.observe(getViewLifecycleOwner(), bookings -> {
             if (bookings != null) {
                 listBooking.addAll(bookings.getItems());
                 totalPage = bookings.getTotalPages();

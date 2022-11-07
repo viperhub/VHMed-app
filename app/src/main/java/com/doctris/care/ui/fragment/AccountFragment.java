@@ -1,5 +1,7 @@
 package com.doctris.care.ui.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -32,6 +34,7 @@ public class AccountFragment extends Fragment {
     private TextView tvBookingHistory;
     private TextView tvChangePassword;
     private TextView tvChangeProfile;
+    private Activity activity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,9 +45,18 @@ public class AccountFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        bindingView(view);
-        bindingData();
-        bindingActions();
+        activity = getActivity();
+        if (isAdded() && activity != null) {
+            bindingView(view);
+            bindingData();
+            bindingActions();
+        }
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        activity = context instanceof Activity ? (Activity) context : null;
     }
 
     private void bindingView(View view) {
@@ -70,7 +82,7 @@ public class AccountFragment extends Fragment {
     }
 
     private void onClickChangePassword(View view) {
-        new KAlertDialog(requireContext(), KAlertDialog.WARNING_TYPE)
+        new KAlertDialog(activity, KAlertDialog.WARNING_TYPE)
                 .setTitleText("Đổi mật khẩu")
                 .setContentText("Bạn có chắc chắn muốn đổi mật khẩu?")
                 .setConfirmClickListener("Đồng ý", sDialog -> {
@@ -91,7 +103,7 @@ public class AccountFragment extends Fragment {
     }
 
     private void onClickLogout(View view) {
-        new KAlertDialog(requireContext(), KAlertDialog.WARNING_TYPE)
+        new KAlertDialog(activity, KAlertDialog.WARNING_TYPE)
                 .setTitleText("Đăng xuất")
                 .setContentText("Bạn có chắc chắn muốn đăng xuất?")
                 .setConfirmClickListener("Đăng xuất", sDialog -> {

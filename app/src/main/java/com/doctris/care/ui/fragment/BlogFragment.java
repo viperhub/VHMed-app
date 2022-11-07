@@ -1,7 +1,10 @@
 package com.doctris.care.ui.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
@@ -42,6 +45,7 @@ public class BlogFragment extends Fragment {
     private List<Blog> listBlogHorizontal;
     private String filter = null;
     private BlogAdapter blogAdapter;
+    private Activity activity;
 
     private void bindingViews(View view) {
         recyclerViewBlogHorizontal = view.findViewById(R.id.recyclerview_blog_horizontal);
@@ -52,14 +56,14 @@ public class BlogFragment extends Fragment {
     private void getBlogData(List<Blog> blogList) {
         progressBar.setVisibility(View.VISIBLE);
         LiveData<ListResponse<Blog>> blogLiveData = BlogRepository.getInstance().getBlog(page, LIMIT, "-created", filter);
-        blogLiveData.observe(requireActivity(), blogs -> {
+        blogLiveData.observe(getViewLifecycleOwner(), blogs -> {
             if (blogs != null) {
                 int lastIndex = blogList.isEmpty() ? 0 : blogList.size() - 1;
                 totalPage = blogs.getTotalPages();
 
                 if(lastIndex == 0) {
                     blogList.addAll(blogs.getItems());
-                    blogAdapter = new BlogAdapter(blogList, requireActivity());
+                    blogAdapter = new BlogAdapter(blogList, activity);
                     recyclerViewBlog.setAdapter(blogAdapter);
                 } else {
                     blogList.addAll(lastIndex, blogs.getItems());
@@ -72,20 +76,20 @@ public class BlogFragment extends Fragment {
 
     private void getBlogHorizontalData(List<Blog> listBlogHorizontal){
         LiveData<ListResponse<Blog>> blogHorizontalLiveData = BlogRepository.getInstance().getBlog(1, 5, "-viewer", filter);
-        blogHorizontalLiveData.observe(requireActivity(), blogHorizontals -> {
+        blogHorizontalLiveData.observe(getViewLifecycleOwner(), blogHorizontals -> {
             if (blogHorizontals != null) {
                 listBlogHorizontal.addAll(blogHorizontals.getItems());
-                BlogHorizontalAdapter blogHorizontalAdapter = new BlogHorizontalAdapter(listBlogHorizontal, requireActivity());
+                BlogHorizontalAdapter blogHorizontalAdapter = new BlogHorizontalAdapter(listBlogHorizontal, activity);
                 recyclerViewBlogHorizontal.setAdapter(blogHorizontalAdapter);
             }
         });
     }
 
     private void initLinearLayout() {
-        LinearLayoutManager linearLayoutManagerHORIZONTAL = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager linearLayoutManagerHORIZONTAL = new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewBlogHorizontal.setLayoutManager(linearLayoutManagerHORIZONTAL);
         getBlogHorizontalData(listBlogHorizontal);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
         recyclerViewBlog.setLayoutManager(linearLayoutManager);
         getBlogData(listBlog);
         nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
@@ -99,9 +103,18 @@ public class BlogFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        bindingViews(view);
-        listBlog = new ArrayList<>();
-        listBlogHorizontal = new ArrayList<>();
-        initLinearLayout();
+        activity = getActivity();
+        if (isAdded() && activity != null) {
+            bindingViews(view);
+            listBlog = new ArrayList<>();
+            listBlogHorizontal = new ArrayList<>();
+            initLinearLayout();
+        }
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        activity = context instanceof Activity ? (Activity) context : null;
     }
 }

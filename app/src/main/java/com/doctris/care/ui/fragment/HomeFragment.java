@@ -1,6 +1,8 @@
 package com.doctris.care.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -51,6 +53,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView rvDoctor;
     private RecyclerView rvBlog;
     private CardView cvInfo;
+    private Activity activity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,13 +64,22 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        bindingView(view);
-        bindingActions();
-        setContentByTime();
-        initService();
-        initDoctor();
-        initBlog();
-        initData();
+        activity = getActivity();
+        if (isAdded() && activity != null) {
+            bindingView(view);
+            bindingActions();
+            setContentByTime();
+            initService();
+            initDoctor();
+            initBlog();
+            initData();
+        }
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        activity = context instanceof Activity ? (Activity) context : null;
     }
 
     private void bindingView(View view) {
@@ -94,17 +106,17 @@ public class HomeFragment extends Fragment {
     }
 
     private void onClickSeeAllBlog(View view) {
-        Intent intent = new Intent(getContext(), BlogActivity.class);
+        Intent intent = new Intent(activity, BlogActivity.class);
         startActivity(intent);
     }
 
     private void onClickInfo(View view) {
-        Intent intent = new Intent(getContext(), PatientInfoActivity.class);
+        Intent intent = new Intent(activity, PatientInfoActivity.class);
         startActivity(intent);
     }
 
     private void onClickSeeAllDoctor(View view) {
-        Intent intent = new Intent(getContext(), DoctorActivity.class);
+        Intent intent = new Intent(activity, DoctorActivity.class);
         startActivity(intent);
     }
 
@@ -126,12 +138,12 @@ public class HomeFragment extends Fragment {
     }
 
     private void initBlog() {
-        LinearLayoutManager linearLayoutManagerHORIZONTAL = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager linearLayoutManagerHORIZONTAL = new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false);
         rvBlog.setLayoutManager(linearLayoutManagerHORIZONTAL);
         LiveData<ListResponse<Blog>> blogLiveData = BlogRepository.getInstance().getBlog(1, 3, "-created", null);
         blogLiveData.observe(getViewLifecycleOwner(), blogs -> {
             if (blogs != null) {
-                BlogHorizontalAdapter adapter = new BlogHorizontalAdapter(blogs.getItems(), getActivity());
+                BlogHorizontalAdapter adapter = new BlogHorizontalAdapter(blogs.getItems(), activity);
                 rvBlog.setAdapter(adapter);
             }
         });
@@ -139,22 +151,22 @@ public class HomeFragment extends Fragment {
     }
 
     private void initService() {
-        rvService.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        rvService.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
         LiveData<ListResponse<Service>> serviceLiveData = ServiceRepository.getInstance().getServices(1, 10, null, null);
         serviceLiveData.observe(getViewLifecycleOwner(), services -> {
             if (services != null) {
-                CartHorizontalAdapter<Service> adapter = new CartHorizontalAdapter<>(services.getItems(), getActivity());
+                CartHorizontalAdapter<Service> adapter = new CartHorizontalAdapter<>(services.getItems(), activity);
                 rvService.setAdapter(adapter);
             }
         });
     }
 
     private void initDoctor() {
-        rvDoctor.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        rvDoctor.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
         LiveData<ListResponse<Doctor>> doctorLiveData = DoctorRepository.getInstance().getDoctors(1, 10, null, null);
         doctorLiveData.observe(getViewLifecycleOwner(), doctors -> {
             if (doctors != null) {
-                CartHorizontalAdapter<Doctor> adapter = new CartHorizontalAdapter<>(doctors.getItems(), getActivity());
+                CartHorizontalAdapter<Doctor> adapter = new CartHorizontalAdapter<>(doctors.getItems(), activity);
                 rvDoctor.setAdapter(adapter);
             }
         });
