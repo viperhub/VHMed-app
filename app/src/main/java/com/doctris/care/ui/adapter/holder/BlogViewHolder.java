@@ -22,6 +22,7 @@ public class BlogViewHolder extends RecyclerView.ViewHolder {
     private TextView tvBlogDescription;
     private TextView tvBlogCategory;
     private TextView tvDateCreated;
+    private TextView tvViewer;
 
     private final Context context;
 
@@ -45,6 +46,7 @@ public class BlogViewHolder extends RecyclerView.ViewHolder {
         tvBlogDescription = itemView.findViewById(R.id.tv_description_blog);
         tvBlogCategory = itemView.findViewById(R.id.tv_category_blog);
         tvDateCreated = itemView.findViewById(R.id.tv_time_created_blog);
+        tvViewer = itemView.findViewById(R.id.tv_number_viewer);
     }
 
     public void setBlogItem(Blog blogItem){
@@ -54,5 +56,6 @@ public class BlogViewHolder extends RecyclerView.ViewHolder {
         tvBlogDescription.setText(blogItem.getDescription());
         tvBlogCategory.setText(blogItem.getExpand().getCategory().getCategoryName());
         tvDateCreated.setText(blogItem.getDateCreated());
+        tvViewer.setText(String.valueOf(blogItem.getViewer()));
     }
 }

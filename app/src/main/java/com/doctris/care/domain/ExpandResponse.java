@@ -1,5 +1,6 @@
 package com.doctris.care.domain;
 
+import com.doctris.care.entities.Blog;
 import com.doctris.care.entities.Category;
 import com.doctris.care.entities.Doctor;
 import com.doctris.care.entities.Patient;
@@ -15,6 +16,16 @@ public class ExpandResponse {
     private Patient patient;
     @SerializedName("service")
     private Service service;
+    @SerializedName("blog")
+    private Blog blog;
+
+    public Blog getBlog() {
+        return blog;
+    }
+
+    public void setBlog(Blog blog) {
+        this.blog = blog;
+    }
 
     public Category getCategory() {
         return category;

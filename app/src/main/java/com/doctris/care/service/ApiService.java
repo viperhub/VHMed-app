@@ -6,6 +6,7 @@ import com.doctris.care.entities.Account;
 import com.doctris.care.entities.Blog;
 import com.doctris.care.entities.Booking;
 import com.doctris.care.entities.Category;
+import com.doctris.care.entities.Comment;
 import com.doctris.care.entities.Doctor;
 import com.doctris.care.entities.Patient;
 import com.doctris.care.entities.Rate;
@@ -179,4 +180,17 @@ public interface ApiService {
                                      @Query("filter") String filter,
                                      @Query("expand") String expand);
 
+    // comment blog list
+    @GET("collections/blog_comment/records")
+    Call<ListResponse<Comment>> getCommentBlog(@Header("Authorization") String token,
+                                               @Query("page") int page,
+                                               @Query("perPage") int perPage,
+                                               @Query("sort") String sort,
+                                               @Query("filter") String filter,
+                                               @Query("expand") String expand);
+
+    // save comment
+    @POST("collections/blog_comment/records")
+    Call<Void> saveComment(@Header("Authorization") String token,
+                        @Body RequestBody params);
 }

@@ -2,11 +2,13 @@ package com.doctris.care.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,12 +17,18 @@ import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.developer.kalert.KAlertDialog;
 import com.doctris.care.R;
 import com.doctris.care.domain.ListResponse;
 import com.doctris.care.entities.Blog;
+import com.doctris.care.entities.Comment;
 import com.doctris.care.repository.BlogRepository;
+import com.doctris.care.repository.CommentRepository;
 import com.doctris.care.ui.adapter.BlogDetailAdapter;
+import com.doctris.care.utils.AlertDialogUtil;
 import com.doctris.care.utils.GlideUtil;
+import com.doctris.care.utils.ToastUtil;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,16 +39,16 @@ public class BlogDetailActivity extends AppCompatActivity {
     private TextView tvTittle;
     private TextView tvDescription;
     private Button btnBack;
+    private FloatingActionButton btnComment;
+    private String idBlog;
 
     private RecyclerView recyclerViewBlog;
     private ProgressBar progressBar;
     private NestedScrollView nestedScrollView;
     private int page = 1;
-    private static final int LIMIT = 10;
     private int totalPage = 0;
     private List<Blog> listBlog;
     private String fillter = null;
-    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +67,7 @@ public class BlogDetailActivity extends AppCompatActivity {
         LiveData<Blog> liveData = BlogRepository.getInstance().getBlogById(intent.getStringExtra("id"));
         liveData.observe(this, blog -> {
             if (blog != null){
+                idBlog = blog.getId();
                 GlideUtil.load(imvBlog, blog.getImage());
                 tvdateCreate.setText(blog.getDateCreated());
                 tvTittle.setText(blog.getTittle());
@@ -79,6 +88,9 @@ public class BlogDetailActivity extends AppCompatActivity {
         recyclerViewBlog = findViewById(R.id.recyclerview_blog);
         progressBar = findViewById(R.id.progressBar);
         nestedScrollView = findViewById(R.id.idNestedSV);
+
+        btnComment = findViewById(R.id.btn_comment);
+
     }
 
     private void getBlogData(List<Blog> blogList) {
@@ -113,9 +125,19 @@ public class BlogDetailActivity extends AppCompatActivity {
 
     public void bindingAction(){
         btnBack.setOnClickListener(this::onClickBtnBack);
+
+        btnComment.setOnClickListener(this::onClickViewAllCommment);
     }
+
 
     private void onClickBtnBack(View view) {
         finish();
+    }
+
+    private void onClickViewAllCommment (View view){
+        Intent intent = new Intent(this ,BlogCommentActivity.class);
+        intent.putExtra("id", idBlog);
+        intent.putExtra("name", tvTittle.getText());
+        startActivity(intent);
     }
 }
