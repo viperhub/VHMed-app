@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
@@ -105,14 +106,15 @@ public class DoctorDetailsActivity extends AppCompatActivity {
 
 
     private void getRateData(List<Rate> listRate) {
-        LiveData<ListResponse<Rate>> liveData = RateRepository.getInstance().getRates(page, 200, "-created", "(doctor='" + doctorId + "')");
+        LiveData<ListResponse<Rate>> liveData = RateRepository.getInstance().getRates(page, 50, "-created", "(doctor='" + doctorId + "')");
         liveData.observe(this, listResponse -> {
             if (listResponse != null) {
                 listRate.addAll(listResponse.getItems());
                 ratingBar.setRating(getRating(listRate));
                 RateAdapter rateAdapter = new RateAdapter(listRate, this);
                 rvComment.setAdapter(rateAdapter);
-                rvComment.setHasFixedSize(true);
+                rvComment.setNestedScrollingEnabled(false);
+                rvComment.setFocusable(false);
             }
         });
     }
