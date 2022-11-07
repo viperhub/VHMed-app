@@ -180,11 +180,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_margin="10dp"
                     android:text="Địa điểm phòng khám: "
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:layout_gravity="center"
                     android:textStyle="bold" />
 
                 <TextView
@@ -199,25 +199,25 @@
 
             <Button
                 android:id="@+id/btnCancelBooking"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="@drawable/bg_transparent_button"
                 android:text="Hủy lịch hẹn"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btnFeedback"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:visibility="gone"
                 android:background="@drawable/bg_transparent_button"
                 android:text="Đánh giá lịch hẹn"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="gone" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -315,7 +315,7 @@
 
             <TextView
                 android:id="@+id/tvBookingDescription"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="Mô tả"

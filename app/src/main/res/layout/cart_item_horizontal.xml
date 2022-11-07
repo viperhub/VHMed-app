@@ -18,7 +18,7 @@
         android:layout_weight="1"
         app:cardBackgroundColor="#FFFFFF"
         app:cardCornerRadius="8dp"
-        app:cardElevation="2dp">
+        app:cardElevation="1dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
