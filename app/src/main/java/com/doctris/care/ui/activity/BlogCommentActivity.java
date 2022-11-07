@@ -27,41 +27,29 @@ public class BlogCommentActivity extends AppCompatActivity {
     private String filter = null;
     private List<Comment> listComment;
     private RecyclerView recyclerViewComment;
-    private TextView tvTitle;
     private Button btnBack;
-    private Button btnOutComment;
     private Button btnSendComment;
     private EditText etComment;
+    private String blogId;
 
-    public void bindingViews(){
+    public void bindingViews() {
         recyclerViewComment = findViewById(R.id.rv_comment);
-        tvTitle = findViewById(R.id.tv_title);
-
         btnBack = findViewById(R.id.btn_back);
-        btnOutComment = findViewById(R.id.btn_out_comment);
         btnSendComment = findViewById(R.id.btn_send_comment);
         etComment = findViewById(R.id.et_comment);
     }
 
-    public void bindingActions(){
+    public void bindingActions() {
         btnBack.setOnClickListener(this::onClickBtnBack);
-        btnOutComment.setOnClickListener(this::onClickBtnBack);
         btnSendComment.setOnClickListener(this::onClickSendCommment);
     }
 
     private void onClickSendCommment(View view) {
-        Intent intent = getIntent();
-        String idBlog = intent.getStringExtra("id");
-
         if (onValidate()) {
-            CommentRepository.getInstance().saveComment(etComment.getText().toString(), idBlog);
-            Intent intentComment = new Intent(this, BlogCommentActivity.class);
-            intentComment.putExtra("id", idBlog);
-            intentComment.putExtra("name", tvTitle.getText());
-
-            finish();
-            startActivity(intentComment);
-
+            CommentRepository.getInstance().saveComment(etComment.getText().toString(), blogId);
+            listComment.clear();
+            getCommentData(listComment);
+            etComment.setText("");
         }
     }
 
@@ -73,19 +61,11 @@ public class BlogCommentActivity extends AppCompatActivity {
         return true;
     }
 
-    private void setTittle(){
-        Intent intent = getIntent();
-        String nameBlog = intent.getStringExtra("name");
-        tvTitle.setText(nameBlog);
-    }
 
     private void getCommentData(List<Comment> commentList) {
-
         Intent intent = getIntent();
-        String idBlog = intent.getStringExtra("id");
-
-        filter = "(blog~'"+ idBlog +"')";
-
+        blogId = intent.getStringExtra("id");
+        filter = "(blog~'" + blogId + "')";
         LiveData<ListResponse<Comment>> commentLiveData = CommentRepository.getInstance().getComments(1, 10, "-created", filter);
         commentLiveData.observe(this, blogs -> {
             if (blogs != null) {
@@ -99,7 +79,6 @@ public class BlogCommentActivity extends AppCompatActivity {
     private void initLinearLayout() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerViewComment.setLayoutManager(linearLayoutManager);
-        setTittle();
         getCommentData(listComment);
     }
 
