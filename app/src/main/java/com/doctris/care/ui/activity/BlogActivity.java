@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.SearchView;
+import androidx.appcompat.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
@@ -30,12 +30,13 @@ public class BlogActivity extends AppCompatActivity {
     private NestedScrollView nestedScrollView;
     private Button backHome;
     private int page = 1;
-    private static final int LIMIT = 10;
+    private static final int LIMIT = 15;
     private int totalPage = 0;
     private List<Blog> listBlog;
     private List<Blog> listBlogHorizontal;
-    private String fillter = null;
+    private String filter = null;
     private SearchView searchView;
+    private BlogAdapter blogAdapter;
 
     private void bindingViews() {
         recyclerViewBlogHorizontal = findViewById(R.id.recyclerview_blog_horizontal);
@@ -43,10 +44,31 @@ public class BlogActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         nestedScrollView = findViewById(R.id.idNestedSV);
         backHome = findViewById(R.id.btn_back);
+        searchView = findViewById(R.id.search_blog);
     }
 
     private void bindingActions() {
         backHome.setOnClickListener(this::onClickBackHome);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // not support yet
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (newText != null && !newText.isEmpty()) {
+                    filter = "(category.category_name~'" + newText + "' || tittle~'" + newText + "')";
+                    listBlog.clear();
+                    getBlogData(listBlog);
+                } else {
+                    filter = null;
+                    getBlogData(listBlog);
+                }
+                return false;
+            }
+        });
     }
 
     private void onClickBackHome(View view) {
@@ -55,48 +77,46 @@ public class BlogActivity extends AppCompatActivity {
 
     private void getBlogData(List<Blog> blogList) {
         progressBar.setVisibility(View.VISIBLE);
-        LiveData<ListResponse<Blog>> blogLiveData = BlogRepository.getInstance().getBlog(page, LIMIT, null, fillter);
+        LiveData<ListResponse<Blog>> blogLiveData = BlogRepository.getInstance().getBlog(page, LIMIT, "-created", filter);
         blogLiveData.observe(this, blogs -> {
             if (blogs != null) {
+                int lastIndex = blogList.isEmpty() ? 0 : blogList.size() - 1;
                 totalPage = blogs.getTotalPages();
-                blogList.addAll(blogs.getItems());
-                BlogAdapter blogAdapter = new BlogAdapter(blogList, this);
-                recyclerViewBlog.setAdapter(blogAdapter);
+
+                if(lastIndex == 0) {
+                    blogList.addAll(blogs.getItems());
+                    blogAdapter = new BlogAdapter(blogList, this);
+                    recyclerViewBlog.setAdapter(blogAdapter);
+                } else {
+                    blogList.addAll(lastIndex, blogs.getItems());
+                    blogAdapter.notifyItemRangeInserted(lastIndex, blogs.getItems().size());
+                }
+                progressBar.setVisibility(View.GONE);
             }
-            progressBar.setVisibility(View.GONE);
         });
     }
 
     private void getBlogHorizontalData(List<Blog> listBlogHorizontal){
-        progressBar.setVisibility(View.VISIBLE);
-        LiveData<ListResponse<Blog>> blogHorizontalLiveData = BlogRepository.getInstance().getBlog(page, 5, "-viewer", fillter);
+        LiveData<ListResponse<Blog>> blogHorizontalLiveData = BlogRepository.getInstance().getBlog(1, 5, "-viewer", filter);
         blogHorizontalLiveData.observe(this, blogHorizontals -> {
             if (blogHorizontals != null) {
-                totalPage = blogHorizontals.getTotalPages();
                 listBlogHorizontal.addAll(blogHorizontals.getItems());
                 BlogHorizontalAdapter blogHorizontalAdapter = new BlogHorizontalAdapter(listBlogHorizontal, this);
                 recyclerViewBlogHorizontal.setAdapter(blogHorizontalAdapter);
             }
-            progressBar.setVisibility(View.GONE);
         });
     }
 
     private void initLinearLayout() {
         LinearLayoutManager linearLayoutManagerHORIZONTAL = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewBlogHorizontal.setLayoutManager(linearLayoutManagerHORIZONTAL);
-
         getBlogHorizontalData(listBlogHorizontal);
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerViewBlog.setLayoutManager(linearLayoutManager);
-
         getBlogData(listBlog);
-
         nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-            progressBar.setVisibility(View.VISIBLE);
-            if (scrollY > (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()) * 0.8 && page < totalPage) {
+            if (scrollY > (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()) * 0.5 && page < totalPage) {
                 page++;
-                getBlogHorizontalData(listBlogHorizontal);
                 getBlogData(listBlog);
             }
         });

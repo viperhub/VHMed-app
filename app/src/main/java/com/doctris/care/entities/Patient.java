@@ -72,7 +72,7 @@ public class Patient {
     }
 
     public String getAvatar() {
-        return "http://doctris-cloud.koreacentral.cloudapp.azure.com/api/files/patient/" + id + "/" + avatar;
+        return "https://doctriscare.ml/api/files/patient/" + id + "/" + avatar;
     }
 
     public void setAvatar(String avatar) {

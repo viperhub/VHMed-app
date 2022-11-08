@@ -6,8 +6,10 @@ import com.doctris.care.entities.Account;
 import com.doctris.care.entities.Blog;
 import com.doctris.care.entities.Booking;
 import com.doctris.care.entities.Category;
+import com.doctris.care.entities.Comment;
 import com.doctris.care.entities.Doctor;
 import com.doctris.care.entities.Patient;
+import com.doctris.care.entities.Rate;
 import com.doctris.care.entities.Service;
 
 import okhttp3.MultipartBody;
@@ -144,12 +146,51 @@ public interface ApiService {
     // increase viewer blog
     @Multipart
     @PATCH("collections/blog/records/{id}")
-    Call<Void> updateViewerBlog (@Header("Authorization") String token,
-                                 @Path("id") String id,
-                                 @Part("viewer") RequestBody viewer);
+    Call<Void> updateViewerBlog(@Header("Authorization") String token,
+                                @Path("id") String id,
+                                @Part("viewer") RequestBody viewer);
 
     // save booking infomation
     @POST("collections/booking/records")
     Call<Booking> saveBooking(@Header("Authorization") String token,
                               @Body RequestBody params);
+
+    // cancel booking
+    @PATCH("collections/booking/records/{id}")
+    Call<Void> cancelBooking(@Header("Authorization") String token,
+                             @Path("id") String id,
+                             @Body RequestBody params);
+
+    // booking feedback
+    @PATCH("collections/booking/records/{id}")
+    Call<Void> feedbackBooking(@Header("Authorization") String token,
+                               @Path("id") String id,
+                               @Body RequestBody params);
+
+    // save rate
+    @POST("collections/rate/records")
+    Call<Void> saveRate(@Header("Authorization") String token,
+                        @Body RequestBody params);
+    // get vote
+    @GET("collections/rate/records")
+    Call<ListResponse<Rate>> getRate(@Header("Authorization") String token,
+                                     @Query("page") int page,
+                                     @Query("perPage") int perPage,
+                                     @Query("sort") String sort,
+                                     @Query("filter") String filter,
+                                     @Query("expand") String expand);
+
+    // comment blog list
+    @GET("collections/blog_comment/records")
+    Call<ListResponse<Comment>> getCommentBlog(@Header("Authorization") String token,
+                                               @Query("page") int page,
+                                               @Query("perPage") int perPage,
+                                               @Query("sort") String sort,
+                                               @Query("filter") String filter,
+                                               @Query("expand") String expand);
+
+    // save comment
+    @POST("collections/blog_comment/records")
+    Call<Void> saveComment(@Header("Authorization") String token,
+                        @Body RequestBody params);
 }

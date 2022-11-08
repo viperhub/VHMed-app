@@ -24,6 +24,15 @@ public class Doctor {
     private String image;
     @SerializedName("price")
     private int price;
+    private float rating;
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
 
     public String getId() {
         return id;
@@ -90,7 +99,7 @@ public class Doctor {
     }
 
     public String getImage() {
-        return "http://doctris-cloud.koreacentral.cloudapp.azure.com/api/files/doctor/" + id + "/" + image;
+        return "https://doctriscare.ml/api/files/doctor/" + id + "/" + image;
     }
 
     public void setImage(String image) {

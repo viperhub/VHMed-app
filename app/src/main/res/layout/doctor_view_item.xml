@@ -7,7 +7,7 @@
     android:layout_margin="5dp"
     android:layout_marginBottom="10dp"
     app:cardCornerRadius="10dp"
-    app:cardElevation="5dp">
+    app:cardElevation="1dp">
 
     <LinearLayout
         android:id="@+id/layout_item"
@@ -47,6 +47,36 @@
                 android:textColor="#000000"
                 android:textSize="20dp"
                 android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="2dp"
+                    android:text="Đánh giá: "
+                    android:textColor="#ACA2A2"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+
+                <RatingBar
+                    android:id="@+id/ratingBarService"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:numStars="5"
+                    android:rating="3.2"
+                    android:progressTint="#FFC107"
+                    android:progressBackgroundTint="#919191"
+                    android:stepSize="0.1"
+                    style="@android:style/Widget.DeviceDefault.RatingBar.Small" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"

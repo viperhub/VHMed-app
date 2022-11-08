@@ -47,7 +47,7 @@ public class Category {
         if (id == null) {
             return image;
         } else {
-            return "http://doctris-cloud.koreacentral.cloudapp.azure.com/api/files/category/" + id + "/" + image;
+            return "https://doctriscare.ml/api/files/category/" + id + "/" + image;
         }
     }
 

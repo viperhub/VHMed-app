@@ -18,9 +18,11 @@ import com.doctris.care.R;
 import com.doctris.care.domain.ListResponse;
 import com.doctris.care.entities.Category;
 import com.doctris.care.entities.Doctor;
+import com.doctris.care.entities.Rate;
 import com.doctris.care.listener.RecyclerTouchListener;
 import com.doctris.care.repository.CategoryRepository;
 import com.doctris.care.repository.DoctorRepository;
+import com.doctris.care.repository.RateRepository;
 import com.doctris.care.ui.adapter.CategoryAdapter;
 import com.doctris.care.ui.adapter.DoctorAdapter;
 
@@ -125,15 +127,27 @@ public class DoctorActivity extends AppCompatActivity {
 
     private void getDoctorData(List<Doctor> list) {
         progressBar.setVisibility(View.VISIBLE);
-        LiveData<ListResponse<Doctor>> doctorLiveData = DoctorRepository.getInstance().getDoctors(page, LIMIT, null, filter);
-        doctorLiveData.observe(this, doctors -> {
-            if (doctors != null) {
+        LiveData<ListResponse<Rate>> rateData = RateRepository.getInstance().getRates(1, 100000, null, null);
+        rateData.observe(this, rateListResponse -> {
+            LiveData<ListResponse<Doctor>> doctorData = DoctorRepository.getInstance().getDoctors(page, LIMIT, null, filter);
+            doctorData.observe(this, doctors -> {
                 totalPage = doctors.getTotalPages();
                 list.addAll(doctors.getItems());
+                for (Doctor doctor : doctors.getItems()) {
+                    float totalRate = 0;
+                    float totalStar = 0;
+                    for (Rate rate : rateListResponse.getItems()) {
+                        if (rate.getExpand().getDoctor().getId().equals(doctor.getId())) {
+                            totalRate += 1;
+                            totalStar += rate.getVote();
+                        }
+                    }
+                    doctor.setRating(totalRate == 0 ? 0 : totalStar / totalRate);
+                }
                 DoctorAdapter doctorAdapter = new DoctorAdapter(list, this);
                 recyclerViewDoctor.setAdapter(doctorAdapter);
-            }
-            progressBar.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
+            });
         });
     }
 

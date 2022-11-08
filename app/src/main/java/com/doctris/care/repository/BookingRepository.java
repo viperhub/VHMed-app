@@ -14,7 +14,6 @@ import com.doctris.care.storage.SharedPrefManager;
 import com.doctris.care.utils.LoggerUtil;
 import com.doctris.care.utils.RequestBodyUtil;
 
-import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -103,6 +102,7 @@ public class BookingRepository {
         jsonParams.put("payment_method", booking.getPaymentMethod());
         jsonParams.put("payment_status", booking.getPaymentStatus());
         jsonParams.put("booking_status", booking.getBookingStatus());
+        jsonParams.put("feedback", booking.isFeedback()? "true" : "false");
 
         Call<Booking> call = RetrofitClient.getInstance().getApi().saveBooking("User " + SharedPrefManager.getInstance().get("token", String.class), RequestBodyUtil.createRequestBody(jsonParams));
         call.enqueue(new Callback<Booking>() {
@@ -125,6 +125,53 @@ public class BookingRepository {
             }
         });
         return bookingResponse;
+    }
+
+    public void cancelBooking(String id){
+        status = new MutableLiveData<>();
+        Map<String, Object> jsonParams = new ArrayMap<>();
+        jsonParams.put("booking_status", "cancel");
+        jsonParams.put("payment_status", "cancel");
+        Call<Void> call = RetrofitClient.getInstance().getApi().cancelBooking("User " + SharedPrefManager.getInstance().get("token", String.class), id, RequestBodyUtil.createRequestBody(jsonParams));
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.isSuccessful()) {
+                    status.setValue(SUCCESS);
+                } else {
+                    status.setValue(ERROR);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                LoggerUtil.e(t.getMessage());
+                status.setValue(ERROR);
+            }
+        });
+    }
+
+    public void feedbackBooking(String id){
+        status = new MutableLiveData<>();
+        Map<String, Object> jsonParams = new ArrayMap<>();
+        jsonParams.put("feedback", "true");
+        Call<Void> call = RetrofitClient.getInstance().getApi().feedbackBooking("User " + SharedPrefManager.getInstance().get("token", String.class), id, RequestBodyUtil.createRequestBody(jsonParams));
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.isSuccessful()) {
+                    status.setValue(SUCCESS);
+                } else {
+                    status.setValue(ERROR);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                LoggerUtil.e(t.getMessage());
+                status.setValue(ERROR);
+            }
+        });
     }
 
 }

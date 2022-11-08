@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ public class DoctorViewHolder extends RecyclerView.ViewHolder {
     private TextView tvDoctorName;
     private TextView tvCategoryDoctor;
     private TextView tvPriceDoctor;
+    private RatingBar ratingBar;
 
     private final Context context;
 
@@ -38,6 +40,7 @@ public class DoctorViewHolder extends RecyclerView.ViewHolder {
         tvDoctorName = itemView.findViewById(R.id.tv_doctor);
         tvCategoryDoctor = itemView.findViewById(R.id.tv_category_doctor);
         tvPriceDoctor = itemView.findViewById(R.id.tv_price_doctor);
+        ratingBar = itemView.findViewById(R.id.ratingBarService);
     }
 
     public void setDoctorItem(Doctor doctorItem) {
@@ -46,6 +49,7 @@ public class DoctorViewHolder extends RecyclerView.ViewHolder {
         tvDoctorName.setText(doctorItem.getName());
         tvCategoryDoctor.setText(doctorItem.getExpand().getCategory().getCategoryName());
         tvPriceDoctor.setText(String.valueOf(doctorItem.getPrice()));
+        ratingBar.setRating((float) doctorItem.getRating());
     }
 
     private void onClickDoctorItem(View view) {

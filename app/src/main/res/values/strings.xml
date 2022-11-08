@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Doctris</string>
-    <string name="app_slogan">Doctris - Đặt lịch khám trực tuyến</string>
+    <string name="app_name">VHMed</string>
+    <string name="app_slogan">Tìm bác sĩ chính xác, đặt lịch khám dễ dàng</string>
     <string name="welcome">Chào mừng bạn trở lại</string>
     <string name="login_content">Hãy đăng nhập để tiếp tục</string>
     <string name="email">Email</string>
