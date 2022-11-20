@@ -25,7 +25,7 @@ VHMed là ứng dụng đặt lịch khám bệnh trực tuyến cho bệnh nhâ
 
 ## Note 
 
-[red text]( Hiện tại ứng dụng đã dừng hoạt động. Để biết thêm thông tin triển khai lại ứng dụng, vui lòng liên hệ qua email: [ Khuong Hung ](mailto:khuonghung1423@gmail.com) )
+Hiện tại ứng dụng đã dừng hoạt động. Để biết thêm thông tin triển khai lại ứng dụng, vui lòng liên hệ qua email: [ Khuong Hung ](mailto:khuonghung1423@gmail.com)
 
 ## License
 
