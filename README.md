@@ -1,37 +1,31 @@
-# Doctris
-Clinic Booking - Android App Version
+# VHMed
+VHMed - App đặt lịch khám bệnh trực tuyến cho bệnh nhân
 
-## Description
+## Thông tin chi tiết
 
-Doctris is an Android app that allows patients to book appointments with doctors. It is a project for the course "PRM392 - SMobile Programming" at the FPT University.
+VHMed là ứng dụng đặt lịch khám bệnh trực tuyến cho bệnh nhân. Ứng dụng cho phép bệnh nhân có thể đặt lịch khám bệnh trực tuyến, xem lịch sử khám bệnh, xem thông tin bác sĩ, xem thông tin bệnh viện và đánh giá bác sĩ.
 
-## Features
+## Các tính năng
 
------ In Progress -----
+- Đặt lịch khám bệnh trực tuyến
+- Xem lịch sử khám bệnh
+- Xem thông tin bác sĩ
+- Xem thông tin bệnh viện
+- Đánh giá bác sĩ
+- Đọc báo 
+- Tìm kiếm bác sĩ, bệnh viện
 
-## Screenshots
-
------ In Progress -----
-
-## Installation
-
------ In Progress -----
-
-## API
-
-This app uses the following API:
-- [Doctris API](http://doctris-cloud.koreacentral.cloudapp.azure.com/api/)
-- [Doctris Admin Dashboard](http://doctris-cloud.koreacentral.cloudapp.azure.com/_/)
-
-Base System URL: `pocketbase.io`
-
-## Contributors
+## Đóng góp
 
 - [Khuong Van Hung]
 - [Nguyen Van Trung]
 - [Le Tien Dat]
 - [Vu Hai Anh]
 - [Doan Van Tuan]
+
+## Note 
+
+[red text]( Hiện tại ứng dụng đã dừng hoạt động. Để biết thêm thông tin triển khai lại ứng dụng, vui lòng liên hệ qua email: [ Khuong Hung ](mailto:khuonghung1423@gmail.com) )
 
 ## License
 
